@@ -124,6 +124,13 @@ body, html {
   background-color: #505050;
 }
 
+@media (min-width: 1200px) {
+  .material-header {
+    padding-left: 250px;
+    padding-right: 250px;
+    height: 275px;
+  }
+}
 #material-search {
   height: 100%;
 }

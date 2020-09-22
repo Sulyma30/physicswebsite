@@ -77,6 +77,7 @@ class OlympEventAdmin(admin.ModelAdmin):
     list_display = ('year', 'olympiad', 'location')
     list_filter = ['olympiad']
     search_fields = ['year', 'location']
+    ordering = ['-year']
     inlines = [OlympFileInline]
 
 admin.site.register(OlympEvent, OlympEventAdmin)

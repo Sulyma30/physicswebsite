@@ -152,6 +152,15 @@ body, html {
     background-color: $bgColor1;
 }
 
+//Umprove visibility of material content considering sidebars
+@media (min-width: 1200px) {
+    .material-header {
+        padding-left: $sidenavWidth;
+        padding-right: $sidenavWidth;
+        height: 275px;
+    }
+}
+
 
 
 //Material Search
