@@ -61,11 +61,13 @@ class Literature(models.Model):
     def literature_filename(instance, filename):
     # file will be uploaded to MEDIA_ROOT/<eng_title__year> if eng_title exists
         if (instance.eng_title and instance.year):
-            return '{0}_{1}.pdf'.format(instance.eng_title, instance.year)
+            file_type = 'pdf' if 'pdf' in filename else 'djvu'
+            return '{0}_{1}.{2}'.format(instance.eng_title, instance.year, file_type)
         else:
             return '{0}'.format(filename)
 
-    pdf = models.FileField(null=True, upload_to=literature_filename)
+    pdf = models.FileField(null=True, blank=True, upload_to=literature_filename)
+    djvu = models.FileField(null=True, blank=True, upload_to=literature_filename)
 
     def serialize(self):
         return {
@@ -74,7 +76,7 @@ class Literature(models.Model):
             "short_title" : self.short_title,
             "supersections" : list(dict.fromkeys([ material.theme.section.supersection.title for material in (Theory.objects.filter(literature=self) if self.literature_type=='theory' else Problem.objects.filter(literature=self)) ])),
             "year" : self.year,
-            "pdf" : self.pdf.url if self.pdf else ''
+            "file" : self.pdf.url if self.pdf else self.djvu.url if self.djvu else '' 
         }
 
     def __str__(self):
