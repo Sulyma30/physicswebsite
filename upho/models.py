@@ -119,6 +119,9 @@ class OlympEvent(models.Model):
             ('LVIV', 'м. Львів'),
             ('ODESA', 'м. Одеса'),
             ('KHERSON', 'м. Херсон'),
+            ('KRYVYI_RIH', 'м. Кривий Ріг'),
+            ('SUMY', 'м. Суми'),
+            ('IVANO-FRANKIVSK', 'м. Івано-Франківськ'),
     ]
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
