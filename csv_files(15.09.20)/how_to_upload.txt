@@ -1,0 +1,11 @@
+python manage.py shell
+
+import csv
+from upho.models import x
+
+with open('file.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        _, created = x.objects.get_or_create(a = row.b, ...)
+
+

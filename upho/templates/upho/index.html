@@ -1,0 +1,26 @@
+{% extends "upho/layout.html" %}
+
+{% block main %}
+<div class="container-fluid main-header">
+    <div class="row h-100">
+        <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end align-items-center pr-3 main-header-info">
+            <div class="main-info">
+                <div class="d-flex flex-column">
+                    <div class="white-text text-md-right text-center ml-auto">
+                       <h4> Ukrainian Physics Olympiads(UPhO)</h4> перший український сайт, який дозволяє самостійно підготуватися до олімпіад з фізики.
+                    </div>
+                    <div class="d-flex justify-content-center justify-content-md-end mt-1">
+                        <a href="{% url 'olympiads' 'national' %}" class="btn btn-md text-center btn-rounded btn-white">Архів олімпіад</a>
+                        <a href="{% url 'materials' %}" class="btn text-center btn-md btn-rounded btn-outline-white">Завдання для підготовки</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 d-none d-md-flex justify-content-start align-items-center pl-4 main-header-logo">
+            <div class="display-1">
+                <div class="font-weight-bold">UPhO</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends "upho/layout.html" %}
+
+{% block title %} Olympiad {% endblock %}
+
+{% block script %}
+<script type="text/babel">
+
+    class TourOptions extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChangeTour = this.handleChangeTour.bind(this);
+      }
+      handleChangeTour(tour, e) {
+        this.props.handleChangeTour(tour);
+      }
+      render() {
+        const options = [];
+        this.props.all_tours.forEach(element => {
+          options.push(
+            <li key={element.tour} className="nav-item">
+              <a className={"nav-link "+ (this.props.tour === element.tour ? "active show " : "" )} onClick={(e) => this.handleChangeTour(element.tour, e)} data-toggle="tab" role="tab" aria-controls={element.tour} aria-selected={ this.props.tour == element.tour ? "true" : "false" }>{element.readable.substring(0, 4)}<span className="d-none d-md-inline-block">{element.readable.substring(4)}</span></a>
+            </li>
+          );
+        });
+        return(
+          <div className="mx-2">
+            <ul className="nav justify-content-center" id="TourTab" role="tablist">
+              {options}
+            </ul>
+          </div>
+        )
+      }
+    }
+
+    class GradeOptions extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChangeGrade = this.handleChangeGrade.bind(this);
+      }
+      handleChangeGrade(e) {
+        this.props.handleChangeGrade(e);
+      }
+      componentDidUpdate() {
+          $('.selectpicker').selectpicker('refresh');
+      }
+      render() {
+        const options = [];
+        this.props.all_grades[this.props.tour].forEach(element => {
+          options.push(
+            element != 0 ?
+            <option value={element} key={element} >{element} клас</option> :
+            <option value={element} key={element} >Всі класи</option>
+          );
+        });
+        return(
+          <select className="selectpicker" data-style="btn-bg olymp-files-select z-depth-0 px-1" data-width="130px" onChange={(e) => this.handleChangeGrade(e)} >
+          {options}
+          </select>
+        )
+      }
+    }
+
+    class YearOptions extends React.Component {
+      constructor(props) {
+            super(props);
+            this.handleChangeYear = this.handleChangeYear.bind(this);
+        }
+        handleChangeYear(e) {
+            this.props.handleChangeYear(e);
+        }
+        componentDidUpdate() {
+          $('.selectpicker').selectpicker('refresh');
+        }
+       render() {
+         
+         const options = [];
+          this.props.all_years[this.props.tour].forEach(element => {
+            options.push(
+            <option value={element} key={element} data-subtext={ "{{ olymp_info.static_location.name }}"=="" ? this.props.all_locations[element] : "" }>{element} рік</option>
+            );
+          })
+         return(
+          <select className="selectpicker" data-style="btn-bg olymp-files-select z-depth-0 pl-2" data-width="140px" data-show-subtext="false" data-live-search="true" data-size="5" value={this.props.year} onChange={(e) => this.handleChangeYear(e)}>
+
+           {options}
+           </select>
+         );
+       }
+    }
+
+    class DownloadButton extends React.Component {
+      render() {
+        return(
+          <div className="d-flex justify-content-center px-1 col my-1">
+            {this.props.olymp_files[this.props.tour][this.props.grade].includes(parseInt(this.props.year)) ?
+              <a href={"/media/" + this.props.file_name} target="_blank" className="btn-lg btn-white waves-effect px-2 py-4 px-sm-3 olymp-files-btn z-depth-1">{this.props.btn_active} <i className="fas fa fa-file-download"></i></a>
+              :
+              <button className="btn-md btn-white waves-effect px-1 py-4 olymp-files-btn z-depth-1 disabled">{this.props.btn_disabled}</button>
+            }
+          </div>
+        );
+      }
+    }
+
+    class OlympSelector extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {
+                tour : this.props.all_tours[0].tour,
+                year : this.props.all_years[this.props.all_tours[0].tour][0],
+                grade : this.props.all_grades[this.props.all_tours[0].tour][0]
+            };
+
+            this.handleChangeTour = this.handleChangeTour.bind(this); 
+            this.handleChangeYear = this.handleChangeYear.bind(this);
+            this.handleChangeGrade = this.handleChangeGrade.bind(this);
+        }
+        
+        handleChangeTour(tour) {
+            // Check whether year and grade are in the selected tour
+            const year = this.props.all_years[tour].includes(this.state.year) ? this.state.year : this.props.all_years[tour][0];
+            const grade = this.props.all_grades[tour].includes(this.state.grade) ? this.state.grade : this.props.all_grades[tour][0];
+            this.setState({ tour : tour, year : year, grade : grade });        
+        }
+
+        handleChangeYear(event) {
+            this.setState({ year : event.target.value });
+        }
+        handleChangeGrade(event) {
+            this.setState({ grade : event.target.value });
+        }
+
+
+        render() {
+            //file name without '-solutions'
+            const file_name = this.props.type + ( "{{olymp_info.static_location.name}}" ? "-{{olymp_info.static_location.name}}-" : "-" ) + this.state.year + (this.state.grade == "0" ? "" : ("-"+this.state.grade) ) + '-' + this.state.tour;
+            return(
+                  <div className="pt-4">
+                    <TourOptions tour={this.state.tour} all_tours={this.props.all_tours} handleChangeTour={this.handleChangeTour} />
+                    <div id="olymp-files-selectors" className="row row-cols-2 row-cols-md-4 mx-1 px-1 py-3 justify-content-center z-depth-5">
+                      <div className="col py-2" id="year-options">
+                            <YearOptions tour={this.state.tour} all_locations={this.props.all_locations} all_years={this.props.all_years} year={this.state.year} handleChangeYear={this.handleChangeYear} />
+                      </div>
+                      
+                      <div className="col border-left py-2">
+                            <GradeOptions tour={this.state.tour} all_grades={this.props.all_grades} grade={this.state.grade} handleChangeGrade={this.handleChangeGrade} />
+                      </div>
+                      <DownloadButton olymp_files={this.props.olymp_files.problems} file_name={file_name + ".pdf"} tour={this.state.tour} grade={this.state.grade} year={this.state.year} btn_active="Умови" btn_disabled="Умов немає" />
+                      <DownloadButton olymp_files={this.props.olymp_files.solutions} file_name={file_name + "-solutions.pdf"} tour={this.state.tour} grade={this.state.grade} year={this.state.year} btn_active="Розв'язки" btn_disabled="Розв'язків немає" />
+                    </div> 
+                  </div>
+            );
+        }
+    }
+
+    class OlympHeader extends React.Component {
+        render() {
+            let header = "{{ olymp_info.olymp_name }}";
+            const options = [];
+            if (this.props.type === "regional") {
+                header += ",";
+                this.props.regional_locations.forEach(element => {
+                  options.push(
+                    <a key={element.name} className={"dropdown-item" + (element.name==="{{olymp_info.static_location.name}}" ? " active" : "")} href={'/olympiads/regional/' + element.name }>{element.readable}</a>
+                  );
+                });
+            }
+            return(
+              <div>
+              <h1 className="text-center h1 text-white animated fadeInDown">{header}</h1>
+              {this.props.type==="regional" ? 
+                <div className="dropdown d-flex justify-content-center">
+                  <div className="dropdown-toggle h1 text-white animated fadeInDown" type="button" id="dropdownMenuRegions" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">{{olymp_info.static_location.readable }}</div>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuRegions">
+                    {options}
+                  </div>
+                </div> : null}
+              </div>
+            );
+        }
+    }
+
+    class OlympFiles extends React.Component {
+
+        render() {
+            return(
+                <div className="d-flex flex-column justify-content-center align-items-center h-100">
+                    <OlympHeader type={this.props.type} regional_locations={this.props.regional_locations} />
+                    <OlympSelector type={this.props.type} all_years={this.props.olymp_options.years} all_grades={this.props.olymp_options.grades} all_tours={this.props.olymp_options.tours} all_locations={this.props.olymp_options.locations} olymp_files={this.props.olymp_files} />
+                </div>
+                
+            );
+        }
+    }
+//Type of olympiad ('national', 'regional',...)
+const type = '{{ olymp_info.olymp_type }}';
+
+//Objects for selectors
+const olymp_options = {{ olymp_options }}
+const olymp_files = {{ olymp_files }}
+const regional_locations = {{ regional_locations }}
+
+        
+    ReactDOM.render(<OlympFiles olymp_options={olymp_options} olymp_files={olymp_files} type={type} regional_locations={regional_locations} />, document.getElementById('olymp-files'));
+</script>
+{% endblock %} 
+
+{% block main %}
+
+    <!-- Olympiad files  -->
+
+    <div class="olymp-files container-fluid" id="olymp-files">
+    </div>
+    
+{% endblock %}

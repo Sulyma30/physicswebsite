@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    
+    <link rel="stylesheet" href="{% static 'upho/styles.css' %}">
+
+    
+
+    <title>{% block title %} UPhO {% endblock %} </title>
+</head>
+
+<body>
+    <!--Triple navigation-->
+    <header>
+        <!-- Navbar at the top -->
+        <div class="d-flex justify-content-center mt-0">
+         
+                <svg height="75" width="150" viewBox="-30 5 250 125" style="z-index: 10082;position:absolute;position: fixed;fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1">
+                    <metadata>
+                    <vectornator:setting key="DisplayWhiteBackground" value="0"/>
+                    <vectornator:setting key="RulersVisible" value="1"/>
+                    <vectornator:setting key="SnapToEdges" value="0"/>
+                    <vectornator:setting key="Units" value="Pixels"/>
+                    <vectornator:setting key="New" value="1"/>
+                    <vectornator:setting key="DynamicGuides" value="0"/>
+                    <vectornator:setting key="SnapToPoints" value="0"/>
+                    <vectornator:setting key="CMYKEnabledKey" value="0"/>
+                    <vectornator:setting key="SnapToGrid" value="0"/>
+                    <vectornator:setting key="SnapToGuides" value="1"/>
+                    <vectornator:setting key="GridSpacing" value="36"/>
+                    </metadata>
+                    <defs/>
+                    <g id="Layer 1" vectornator:layerName="Layer 1">
+                        <a xlink:href="{% url 'index' %}">
+                    <path stroke="#000000" stroke-width="2.56" d="M26.4488+92.837C8.34671+87.412+22.6266+68.7502+58.9879+46.5591C95.3493+24.3681+148.028+7.57319+166.537+11.3967C193.23+16.9111+173.195+36.8985+135.804+57.3164C73.3021+91.4465+35.9731+95.6913+26.4488+92.837Z" fill="#ffffff" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+                    <path stroke="#ffffff" stroke-width="2.4" d="M54.3373+64.9219C47.2869+55.3378+56.6505+34.9799+78.5503+23.9542C100.45+12.9285+128.19+18.1193+133.559+24.3382C138.929+30.5572+119.119+43.0867+100.034+52.5887C80.3483+62.3896+57.7859+69.61+54.3373+64.9219Z" fill="#000000" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+                    <path stroke="#000000" stroke-width="2.07" d="M50.7579+64.6018C50.7579+64.6018+49.3158+66.9236+51.0371+68.2493C52.7234+69.5481+59.1554+71.2126+73.6211+66.1529C87.2441+61.388+94.3198+57.5938+94.3198+57.5938" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+                    <path stroke="#000000" stroke-width="2.15" d="M148.327+45.295C148.327+45.295+158.379+38.9468+167.569+31.3106C170.25+29.0827+177.581+22.2963+175.166+18.5309C172.178+13.8727+163.121+14.215+163.121+14.215" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+                    <path stroke="#000000" stroke-width="2.15" d="M24.0763+88.5478C24.0763+88.5478+27.5646+90.016+32.1215+90.3083C36.8106+90.609+40.9443+89.7233+40.9443+89.7233" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+                    </a>
+                    </g>
+                </svg>
+        </div>
+        <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">Олімпіади з фізики</a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                <h6 class="dropdown-header">Всеукраїнська олімпіада</h6>
+                              <a class="dropdown-item" href="{% url 'olympiads' 'national' %}">IV-й етап</a>
+                              <a class="dropdown-item" href="{% url 'olympiads' 'regional' %}">III-й етап</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item disabled" href="#">Міжнародні олімпіади</a>
+                            </div>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'materials' %}">Завдання по темам</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'literature' 'theory' %}">Література</a>
+                        </li>
+                    </ul>
+               </div>
+            
+
+        </nav>
+        <!--/. Navbar at the top -->
+       
+        {% block header %}
+        {% endblock %}
+
+    </header>
+    <!--/.Triple navigation-->
+
+    {% block main %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark" id="footer">
+
+        <div class="unique-color-dark pt-3">
+        <div class="container">
+
+            <!-- Call to action -->
+            <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item">
+                <h6 class="mb-1">Хочеш поділитися матеріалами або своїми враженнями про сайт?</h6>
+            </li>
+            
+            <li class="list-inline-item">
+                <a href="#!" class="btn btn-outline-white btn-rounded">Заповнити форму!</a>
+            </li>
+            </ul>
+            <!-- Call to action -->
+        
+        </div>
+
+        </div>
+        <hr class="white">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left mt-5 footer-cover">
+    
+        <!-- Grid row -->
+        <div class="row mt-3">
+    
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-5 col-xl-4 mx-auto mb-4">
+    
+            <!-- Content -->
+            <h6 class="text-uppercase font-weight-bold">UPhO</h6>
+            <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p>Фізику вчити набагато цікавіше, якщо можна змагатися та ділитися своїм досвідом з іншими. Олімпіада це не просто змагання, це місце, де оригінальність задачі стає поштовхом до відкриття нових ідей. Ми хочемо зробити олімпіади з фізики доступними кожному!</p>
+    
+            </div>
+            <!-- Grid column -->
+    
+    
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
+    
+            <!-- Links -->
+            <h6 class="text-uppercase font-weight-bold">Корисні посилання</h6>
+            <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p>
+                <a href="#!">Як підготуватися до олімпіади?</a>
+            </p>
+            <p>
+                <a href="#!">IV-й етап Всеукраїнської олімпіади з фізики</a>
+            </p>
+            <p>
+                <a href="#!">Література</a>
+            </p>
+            <p>
+                <a href="#!">Про нас</a>
+            </p>
+    
+            </div>
+            <!-- Grid column -->
+    
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+    
+            <!-- Links -->
+            <h6 class="text-uppercase font-weight-bold">Контакти</h6>
+            <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <p>
+                <i class="fas fa-home mr-3"></i>м. Київ, Україна</p>
+                <p>
+                <i class="fas fa-envelope mr-3"></i> info@example.com</p>
+            <p>
+                <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+            <p>
+                <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+    
+            </div>
+            <!-- Grid column -->
+    
+        </div>
+        <!-- Grid row -->
+    
+        </div>
+        <!-- Footer Links -->
+    
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> upho.com</a>
+        </div>
+        <!-- Copyright -->
+    
+    </footer>
+    <!-- Footer -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <script src="{% static 'upho/index.js' %}"></script>
+
+
+
+    {% block script %}
+    {% endblock %}
+
+</body>
+
+</html>
