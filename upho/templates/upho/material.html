@@ -16,7 +16,7 @@
       );
     }
   }
-  
+
   class MaterialTable extends React.Component {
     render() {
       return (
@@ -51,7 +51,7 @@
     render() {
       const novice_rows = [];
       const novice_style={borderLeft: "4px solid lightgreen"};
-  
+
       const advanced_rows = [];
       const advanced_style={borderLeft: "4px solid orange"};
 
@@ -73,7 +73,7 @@
           <MaterialRow row={row} key={row.literature} style={expert_style} />
         );
       });
-      
+
       return (
         <div className="tab-pane fade in show active" id="recommended" role="tabpanel">
           <MaterialTable rows={novice_rows} />
@@ -108,19 +108,19 @@
     render() {
       return (
         <ul className="nav nav-pills material-pills mx-3">
-          
+
           {
             this.props.task=="problems" ?
             <li className="nav-item px-0">
             <a className="nav-link active mx-0" id="recommended-tab" data-toggle="tab" href="#recommended" role="tab"
-              aria-controls="recommended-tasks" aria-selected="true">Годні задачі</a></li> : 
+              aria-controls="recommended-tasks" aria-selected="true">Годні задачі</a></li> :
             <li className="nav-item px-0 pt-2">
             Сторінки
             </li>
           }
-          
+
           {
-            this.props.all.length != 0 ? 
+            this.props.all.length != 0 ?
             <li className="nav-item px-0">
             <a className="nav-link mx-0" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all-tasks"
               aria-selected="false">Всі</a>
@@ -186,7 +186,7 @@ ReactDOM.render(<Content tasks={material} task={task} />, document.getElementByI
     {% endif %}
 
     <!-- Button trigger modal !-->
-    <div type="button" class="text-white mb-3" data-toggle="modal" data-target="#ModalCenter">
+    <div role="button" class="text-white mb-3" data-toggle="modal" data-target="#ModalCenter">
       Як тут вчитися?
     </div>
 
@@ -219,7 +219,7 @@ ReactDOM.render(<Content tasks={material} task={task} />, document.getElementByI
     </div>
 
   </div>
-  
+
 </div>
 {% endblock %}
 

@@ -72,7 +72,7 @@
           $('.selectpicker').selectpicker('refresh');
         }
        render() {
-         
+
          const options = [];
           this.props.all_years[this.props.tour].forEach(element => {
             options.push(
@@ -111,16 +111,16 @@
                 grade : this.props.all_grades[this.props.all_tours[0].tour][0]
             };
 
-            this.handleChangeTour = this.handleChangeTour.bind(this); 
+            this.handleChangeTour = this.handleChangeTour.bind(this);
             this.handleChangeYear = this.handleChangeYear.bind(this);
             this.handleChangeGrade = this.handleChangeGrade.bind(this);
         }
-        
+
         handleChangeTour(tour) {
             // Check whether year and grade are in the selected tour
             const year = this.props.all_years[tour].includes(this.state.year) ? this.state.year : this.props.all_years[tour][0];
             const grade = this.props.all_grades[tour].includes(this.state.grade) ? this.state.grade : this.props.all_grades[tour][0];
-            this.setState({ tour : tour, year : year, grade : grade });        
+            this.setState({ tour : tour, year : year, grade : grade });
         }
 
         handleChangeYear(event) {
@@ -141,13 +141,13 @@
                       <div className="col py-2" id="year-options">
                             <YearOptions tour={this.state.tour} all_locations={this.props.all_locations} all_years={this.props.all_years} year={this.state.year} handleChangeYear={this.handleChangeYear} />
                       </div>
-                      
+
                       <div className="col border-left py-2">
                             <GradeOptions tour={this.state.tour} all_grades={this.props.all_grades} grade={this.state.grade} handleChangeGrade={this.handleChangeGrade} />
                       </div>
                       <DownloadButton olymp_files={this.props.olymp_files.problems} file_name={file_name + ".pdf"} tour={this.state.tour} grade={this.state.grade} year={this.state.year} btn_active="Умови" btn_disabled="Умов немає" />
                       <DownloadButton olymp_files={this.props.olymp_files.solutions} file_name={file_name + "-solutions.pdf"} tour={this.state.tour} grade={this.state.grade} year={this.state.year} btn_active="Розв'язки" btn_disabled="Розв'язків немає" />
-                    </div> 
+                    </div>
                   </div>
             );
         }
@@ -168,9 +168,9 @@
             return(
               <div>
               <h1 className="text-center h1 text-white animated fadeInDown">{header}</h1>
-              {this.props.type==="regional" ? 
+              {this.props.type==="regional" ?
                 <div className="dropdown d-flex justify-content-center">
-                  <div className="dropdown-toggle h1 text-white animated fadeInDown" type="button" id="dropdownMenuRegions" data-toggle="dropdown"
+                  <div className="dropdown-toggle h1 text-white animated fadeInDown" role="button" id="dropdownMenuRegions" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">{{olymp_info.static_location.readable }}</div>
                   <div className="dropdown-menu" aria-labelledby="dropdownMenuRegions">
                     {options}
@@ -189,7 +189,7 @@
                     <OlympHeader type={this.props.type} regional_locations={this.props.regional_locations} />
                     <OlympSelector type={this.props.type} all_years={this.props.olymp_options.years} all_grades={this.props.olymp_options.grades} all_tours={this.props.olymp_options.tours} all_locations={this.props.olymp_options.locations} olymp_files={this.props.olymp_files} />
                 </div>
-                
+
             );
         }
     }
@@ -201,10 +201,10 @@ const olymp_options = {{ olymp_options }}
 const olymp_files = {{ olymp_files }}
 const regional_locations = {{ regional_locations }}
 
-        
+
     ReactDOM.render(<OlympFiles olymp_options={olymp_options} olymp_files={olymp_files} type={type} regional_locations={regional_locations} />, document.getElementById('olymp-files'));
 </script>
-{% endblock %} 
+{% endblock %}
 
 {% block main %}
 
@@ -212,5 +212,5 @@ const regional_locations = {{ regional_locations }}
 
     <div class="olymp-files container-fluid" id="olymp-files">
     </div>
-    
+
 {% endblock %}

@@ -46,9 +46,9 @@ def material(request, theme_id, task = "problems"):
             "expert" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=2, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = 2).distinct()]
             }, "all" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=None, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = None).distinct()]
         }
-        
+
     # Return theme contents
-    return render(request, "upho/material.html", { "task" : task , "material" : SafeString(material), "theme" : theme, "previous" :  None if theme.order <= 1 else Theme.objects.get(order=theme.order - 1), "next" : None if theme.order == max([element.order for element in Theme.objects.all()]) else Theme.objects.get(order=theme.order + 1) })   
+    return render(request, "upho/material.html", { "task" : task , "material" : SafeString(material), "theme" : theme, "previous" :  None if theme.order <= 1 else Theme.objects.get(order=theme.order - 1), "next" : None if theme.order == max([element.order for element in Theme.objects.all()]) else Theme.objects.get(order=theme.order + 1) })
 
 
 
@@ -60,8 +60,8 @@ def olympiads(request, olymp_type='national', static_location=''):
         static_location = 'KYIV'
 
     # All options for olympiad (each has at least one corresponding olympiad file)
-    years = {tour : list(OlympEvent.objects.filter(olympiad=olympiad, olympfile__tour=tour, location__contains=static_location).values_list('year', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
-    grades = {tour : list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location, tour=tour).values_list('grade', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
+    years = {tour : list(OlympEvent.objects.filter(olympiad=olympiad, olympfile__tour=tour, location__contains=static_location).order_by('-year').values_list('year', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
+    grades = {tour : list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location, tour=tour).order_by('-grade').values_list('grade', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
     tours = [{ "tour" : tour, "readable" : dict(OlympFile.TOUR_CHOICES)[tour] } for tour in list(OlympFile.objects.filter(event__olympiad=olympiad).values_list('tour', flat=True).distinct()) ]
     locations = { year : dict(OlympEvent.LOCATION_CHOICES)[OlympEvent.objects.get(olympiad=olympiad, year=year).location] for year in list(OlympEvent.objects.filter(olympiad=olympiad, location__contains=static_location).values_list('year', flat=True).distinct()) }
     olymp_options = {"years" : years, "grades" : grades, "tours" : tours, "locations" : locations}
@@ -70,8 +70,8 @@ def olympiads(request, olymp_type='national', static_location=''):
     olymp_files ={ olymp_files :  {tour : {f"{grade}" : list(OlympEvent.objects.filter(olympiad=olympiad, location__contains=static_location, olympfile__tour=tour, olympfile__grade=grade, olympfile__solutions=False if olymp_files=='problems' else True).values_list('year', flat=True).distinct()) for grade in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location, tour=tour).values_list('grade', flat=True).distinct()) } for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct()) } for olymp_files in ['problems', 'solutions'] }
 
     # Info about olympiad
-    olymp_info = { "olymp_type" : olymp_type, "olymp_name" : Olympiad.objects.get(olymp_type=olymp_type).name , "static_location" : { "name" : static_location, "readable" : "" if static_location=="" else dict(OlympEvent.LOCATION_CHOICES)[static_location.upper()] } }
-    
+    olymp_info = { "olymp_type" : olymp_type, "olymp_name" : Olympiad.objects.get(olymp_type=olymp_type).name , "static_location" : { "name" : static_location.lower(), "readable" : "" if static_location=="" else dict(OlympEvent.LOCATION_CHOICES)[static_location.upper()] } }
+
     # List of regional locations (each has at least one corresponding olympiad file)
     regional_locations = [{ "name" : location, "readable" : dict(OlympEvent.LOCATION_CHOICES)[location] } for location in list(OlympEvent.objects.filter(olympiad__olymp_type="regional").values_list('location', flat=True).distinct()) ]
 

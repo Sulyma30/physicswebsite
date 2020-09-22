@@ -44,7 +44,7 @@ class Theme(models.Model):
 
     def __str__(self):
         return f"{self.title}"
-    
+
 class Requirement(models.Model):
     parent_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="requirement")
     child_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="theme")
@@ -103,7 +103,7 @@ class Problem(models.Model):
     difficulty = models.PositiveSmallIntegerField(null=True, choices=PROBLEM_DIFFICULTY_CHOICE)
     chosen = models.BooleanField(default=False)
 
-    
+
     # Olymp_type must be unique!!!
 class Olympiad(models.Model):
     OLYMP_CHOICES = [('national', 'Всеукраїнська'), ('regional', 'Обласна')]
@@ -119,6 +119,9 @@ class OlympEvent(models.Model):
             ('LVIV', 'м. Львів'),
             ('ODESA', 'м. Одеса'),
             ('KHERSON', 'м. Херсон'),
+            ('KRYVYI_RIH', 'м. Кривий Ріг'),
+            ('SUMY', 'м. Суми'),
+            ('IVANO-FRANKIVSK', 'м. Івано-Франківськ'),
     ]
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()

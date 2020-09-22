@@ -26,7 +26,7 @@ SECRET_KEY = '9@a^k5t4cen&swpi+d!w4i7zxxn^nki5%l#!n737bneh4g$*yp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Sulyma.pythonanywhere.com']
 
 
 # Application definition
@@ -119,9 +119,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = "/home/Sulyma/physicswebsite/static"
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = BASE_DIR / 'upho/media/'
+MEDIA_ROOT = "/home/Sulyma/physicswebsite/media"
 
 MEDIA_URL = '/media/'
