@@ -11,7 +11,7 @@
         <tr style={this.props.style}>
             <td>{this.props.row.tasks}</td>
             <td></td>
-            <td className="text-right pr-2">{this.props.row.literature.short_title} {this.props.row.literature.pdf ? <a href={this.props.row.literature.pdf}><i className="fas fa fa-download"></i></a> : null}</td>
+            <td className="text-right pr-2">{this.props.row.literature.short_title} {this.props.row.literature.file ? <a href={this.props.row.literature.file}><i className="fas fa fa-download"></i></a> : null}</td>
         </tr>
       );
     }

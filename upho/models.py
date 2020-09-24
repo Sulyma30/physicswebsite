@@ -51,7 +51,7 @@ class Requirement(models.Model):
 
 class Literature(models.Model):
 
-    LITERATURE_CHOICES = [ ('theory', 'Підручник' ), ('problems', 'Задачник') ]
+    LITERATURE_CHOICES = [ ('theory', 'Підручник' ), ('problems', 'Задачник'), ('exp', 'Експеримент') ]
     title = models.CharField(max_length=200)
     short_title = models.CharField(max_length=50)
     year = models.PositiveSmallIntegerField()
