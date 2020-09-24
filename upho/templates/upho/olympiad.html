@@ -118,8 +118,8 @@
 
         handleChangeTour(tour) {
             // Check whether year and grade are in the selected tour
-            const year = this.props.all_years[tour].includes(this.state.year) ? this.state.year : this.props.all_years[tour][0];
-            const grade = this.props.all_grades[tour].includes(this.state.grade) ? this.state.grade : this.props.all_grades[tour][0];
+            const year = this.props.all_years[tour].includes(parseInt(this.state.year)) ? this.state.year : this.props.all_years[tour][0];
+            const grade = this.props.all_grades[tour].includes(parseInt(this.state.grade)) ? this.state.grade : this.props.all_grades[tour][0];
             this.setState({ tour : tour, year : year, grade : grade });
         }
 
