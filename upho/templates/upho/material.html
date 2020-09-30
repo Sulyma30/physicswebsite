@@ -1,163 +1,10 @@
 {% extends "upho/layout.html" %}
+{% load static %}
 
 {% block title %} Material {% endblock %}
 
 {% block script %}
-<script type="text/babel">
-
-  class MaterialRow extends React.Component {
-    render() {
-      return (
-        <tr style={this.props.style}>
-            <td>{this.props.row.tasks}</td>
-            <td></td>
-            <td className="text-right pr-2">{this.props.row.literature.short_title} {this.props.row.literature.file ? <a href={this.props.row.literature.file}><i className="fas fa fa-download"></i></a> : null}</td>
-        </tr>
-      );
-    }
-  }
-
-  class MaterialTable extends React.Component {
-    render() {
-      return (
-        <table className="table table-striped mb-4">
-          <tbody>
-            {this.props.rows}
-          </tbody>
-        </table>
-      );
-    }
-  }
-
-  class AllTasks extends React.Component {
-    render() {
-      const all_rows = [];
-      const all_style = {borderLeft: "4px solid lightgray"}
-      this.props.all.forEach(row => {
-        all_rows.push(
-          <MaterialRow row={row} key={row.literature} style={all_style} />
-        );
-      });
-      return(
-        <div className="tab-pane fade" id="all" role="tabpanel">
-          <MaterialTable rows={all_rows} />
-        </div>
-      );
-    }
-
-  }
-
-  class ChosenTasks extends React.Component {
-    render() {
-      const novice_rows = [];
-      const novice_style={borderLeft: "4px solid lightgreen"};
-
-      const advanced_rows = [];
-      const advanced_style={borderLeft: "4px solid orange"};
-
-      const expert_rows = [];
-      const expert_style={borderLeft: "4px solid red"};
-
-      this.props.chosen.novice.forEach((row) => {
-        novice_rows.push(
-          <MaterialRow row={row} key={row.literature} style={novice_style} />
-        );
-      });
-      this.props.chosen.advanced.forEach((row) => {
-        advanced_rows.push(
-          <MaterialRow row={row} key={row.literature} style={advanced_style} />
-        );
-      });
-      this.props.chosen.expert.forEach((row) => {
-        expert_rows.push(
-          <MaterialRow row={row} key={row.literature} style={expert_style} />
-        );
-      });
-
-      return (
-        <div className="tab-pane fade in show active" id="recommended" role="tabpanel">
-          <MaterialTable rows={novice_rows} />
-          <MaterialTable rows={advanced_rows} />
-          <MaterialTable rows={expert_rows} />
-        </div>
-      );
-    }
-  }
-
-//Here we should use type (problems or theory) and info about current theme (from material) and get information about neighbourhood themes and with url_for open the page (saving the type)
-  class NextPrevious extends React.Component {
-    render() {
-      return (
-        <div className="row justify-content-sm-between justify-content-center my-4">
-          <div className="pl-3 col-sm-6 col-12 d-flex justify-content-center justify-content-sm-start">
-        {% if previous %}
-            <a href="{% url 'material' previous.id task %}" className="btn btn-outline-bg"><i className="fas fa-lg fa-angle-left"></i> {{ previous.title }} </a>
-          {% endif %}
-          </div>
-          <div className="pr-3 col-sm-6 col-12 d-flex justify-content-center justify-content-sm-end">
-          {% if next %}
-            <a href="{% url 'material' next.id task %}" className="btn btn-outline-bg">{{ next.title }}<i className="fas fa-lg fa-angle-right"></i></a>
-          {% endif %}
-          </div>
-        </div>
-      );
-    }
-  }
-
-  class ContentHeaders extends React.Component {
-    render() {
-      return (
-        <ul className="nav nav-pills material-pills mx-3">
-
-          {
-            this.props.task=="problems" ?
-            <li className="nav-item px-0">
-            <a className="nav-link active mx-0" id="recommended-tab" data-toggle="tab" href="#recommended" role="tab"
-              aria-controls="recommended-tasks" aria-selected="true">Годні задачі</a></li> :
-            <li className="nav-item px-0 pt-2">
-            Сторінки
-            </li>
-          }
-
-          {
-            this.props.all.length != 0 ?
-            <li className="nav-item px-0">
-            <a className="nav-link mx-0" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all-tasks"
-              aria-selected="false">Всі</a>
-          </li> : null
-          }
-          <li className="nav-item ml-auto pr-2 pt-2">
-            Літ<span className="d-none d-sm-inline-block">ерату</span><span className="d-inline-block d-sm-none">-</span>ра
-          </li>
-        </ul>
-      );
-    }
-  }
-
-
-  class Content extends React.Component {
-    render() {
-      return (
-        <div className="col-md-12 col-xl-8">
-          <ContentHeaders all={this.props.tasks.all} task={this.props.task} />
-          <div className="tab-content pt-1 px-3">
-            <ChosenTasks chosen={this.props.tasks.chosen} />
-            <AllTasks all={this.props.tasks.all} />
-          </div>
-          <NextPrevious />
-        </div>
-      );
-    }
-  }
-
-//From backend I get type (problems or theory) and theme_id and with API I get material
-
-const material = {{ material }}
-const task = '{{ task }}'
-
-ReactDOM.render(<Content tasks={material} task={task} />, document.getElementById('material-content'));
-
-</script>
+<script type="text/babel" src="{% static 'upho/material.js' %}"></script>
 {% endblock %}
 
 {% block header %}
@@ -177,10 +24,10 @@ ReactDOM.render(<Content tasks={material} task={task} />, document.getElementByI
   <!-- Header with buttons -->
 
   <div class="row align-items-end px-4">
-    {% if task == "problems" %}
+    {% if task_type == "problems" %}
     <div class="display-3 text-center text-white col-12 col-sm-auto">Задачі</div>
     <a href="{% url 'material' theme.id 'theory' %}" role="button" class="btn btn-outline-white btn-rounded mx-1 mb-3 mr-auto">Теорія</a>
-    {% elif task == "theory" %}
+    {% elif task_type == "theory" %}
     <div class="display-3 text-center text-white col-12 col-sm-auto">Теорія</div>
     <a href="{% url 'material' theme.id 'problems' %}" role="button" class="btn btn-outline-white btn-rounded mx-1 mb-3 mr-auto">Задачі</a>
     {% endif %}
@@ -226,7 +73,7 @@ ReactDOM.render(<Content tasks={material} task={task} />, document.getElementByI
 {% block main %}
 
 <!-- Content -->
-<div class="row justify-content-center px-2 pt-4 pt-xl-5" id="material-content">
+<div class="row justify-content-center px-2 pt-4 pt-xl-5" data-theme_id="{{ theme.id }}" data-task_type="{{ task_type }}" id="material-content">
 </div>
 
 {% endblock %}

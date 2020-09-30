@@ -74,7 +74,7 @@ class Literature(models.Model):
             "title" : self.title,
             "id" : self.id,
             "short_title" : self.short_title,
-            "supersections" : list(dict.fromkeys([ material.theme.section.supersection.title for material in (Theory.objects.filter(literature=self) if self.literature_type=='theory' else Problem.objects.filter(literature=self)) ])),
+             #"supersections" : list(dict.fromkeys([ material.theme.section.supersection.title for material in (Theory.objects.filter(literature=self) if self.literature_type=='theory' else Problem.objects.filter(literature=self)) ])),
             "year" : self.year,
             "file" : self.pdf.url if self.pdf else self.djvu.url if self.djvu else '' 
         }

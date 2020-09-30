@@ -25,30 +25,58 @@ def materials(request):
 
     return render(request, 'upho/materials.html', { "requirements" : requirements, "themes" : themes, "themes_list" : SafeString({ section.title : [element.serialize() for element in themes.filter(section=section)] for section in sections}), "sections_list" : SafeString({supersection.title : [element.serialize() for element in sections.filter(supersection=supersection)] for supersection in supersections}), "supersections_list" : SafeString([element.serialize() for element in supersections]),"disabled_materials" : SafeString(disabled_materials)})
 
-def material(request, theme_id, task = "problems"):
+def material(request, theme_id, task_type = "problems"):
     # Query for requested theme
     theme = get_object_or_404(Theme, pk=theme_id)
 
-    #Query for requested material. ADD EXCEPT!!!!???
-    if (task == "theory"):
-        material = {
-            'chosen' : {
-            "novice" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in Theory.objects.filter(theme__id=theme_id, difficulty=0, literature=literature) ])} for literature in Literature.objects.filter(theory__theme__id = theme_id, theory__difficulty = 0).distinct()],
-            "advanced" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in Theory.objects.filter(theme__id=theme_id, difficulty=1, literature=literature) ])} for literature in Literature.objects.filter(theory__theme__id = theme_id, theory__difficulty = 1).distinct()],
-            "expert" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in Theory.objects.filter(theme__id=theme_id, difficulty=2, literature=literature) ])} for literature in Literature.objects.filter(theory__theme__id = theme_id, theory__difficulty = 2).distinct()]
-            }, "all" : []
-        }
-    elif (task == "problems"):
-         material = {
-            'chosen' : {
-            "novice" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=0, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = 0).distinct()],
-            "advanced" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=1, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = 1).distinct()],
-            "expert" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=2, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = 2).distinct()]
-            }, "all" : [{"literature" : literature.serialize(), "tasks" : ', '.join([ f"{task.number}" for task in Problem.objects.filter(theme__id=theme_id, difficulty=None, literature=literature) ])} for literature in Literature.objects.filter(problem__theme__id = theme_id, problem__difficulty = None).distinct()]
-        }
+    return render(request, "upho/material.html", { "task_type" : task_type , "theme" : theme })
 
-    # Return theme contents
-    return render(request, "upho/material.html", { "task" : task , "material" : SafeString(material), "theme" : theme, "previous" :  None if theme.order <= 1 else Theme.objects.get(order=theme.order - 1), "next" : None if theme.order == max([element.order for element in Theme.objects.all()]) else Theme.objects.get(order=theme.order + 1) })
+def tasks(request, theme_id, task_type = "problems"):
+    # Query for requested theme
+    theme = get_object_or_404(Theme, pk=theme_id)
+
+    novice = []
+    advanced = []
+    expert = []
+    all_tasks = []
+
+    if (task_type == "theory"):
+        tasks = Theory.objects.filter(theme_id = theme_id)
+        for literature_id in tasks.values_list('literature', flat=True).distinct():
+            literature = Literature.objects.get(id = literature_id)
+            literature_serialized = literature.serialize()
+
+            novice.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in tasks.filter(difficulty=0, literature=literature) ])})
+            advanced.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in tasks.filter(difficulty=1, literature=literature) ])})
+            expert.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.start_page}-{task.end_page}" for task in tasks.filter(difficulty=2, literature=literature) ])})
+
+    elif (task_type == "problems"):
+        tasks = Problem.objects.filter(theme_id = theme_id)
+        for literature_id in tasks.values_list('literature', flat=True).distinct():
+            literature = Literature.objects.get(id = literature_id)
+            literature_serialized = literature.serialize()
+
+            novice.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.number}" for task in tasks.filter(difficulty=0, literature=literature) ])}) 
+            advanced.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.number}" for task in tasks.filter(difficulty=1, literature=literature) ])})
+            expert.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.number}" for task in tasks.filter(difficulty=2, literature=literature) ])})
+            all_tasks.append({"literature" : literature_serialized, "tasks" : ', '.join([ f"{task.number}" for task in tasks.filter(difficulty=None, literature=literature) ])})
+
+    material = {
+        'tasks' : {
+            'chosen' : {
+                "novice" : novice,
+                "advanced" : advanced,
+                "expert" : expert
+                },
+            "all" : all_tasks
+        },
+        'connections' : {
+            "previous" :  None if theme.order <= 1 else Theme.objects.get(order=theme.order - 1).serialize(), 
+            "next" : None if theme.order == max([element.order for element in Theme.objects.filter(section__supersection = theme.section.supersection)]) else Theme.objects.get(order=theme.order + 1).serialize()
+        }
+    }
+
+    return JsonResponse(material)
 
 
 
