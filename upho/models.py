@@ -116,14 +116,21 @@ class Olympiad(models.Model):
         return self.name
 
 class OlympEvent(models.Model):
-    LOCATION_CHOICES = [
+    LOCATION_CHOICES = [(
+        'Міста',(
             ('KYIV','м. Київ'),
             ('LVIV', 'м. Львів'),
             ('ODESA', 'м. Одеса'),
             ('KHERSON', 'м. Херсон'),
             ('KRYVYI_RIH', 'м. Кривий Ріг'),
             ('SUMY', 'м. Суми'),
-            ('IVANO-FRANKIVSK', 'м. Івано-Франківськ'),
+            ('IVANO-FRANKIVSK', 'м. Івано-Франківськ'),)
+        ),(
+        'Області', (
+            ('LVIV_REGION', 'Львівська обл.'),
+            ('ODESA_REGION', 'Одеська обл.'),
+            ('KHARKIV_REGION', 'Харківська обл.'),)
+        ),
     ]
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
