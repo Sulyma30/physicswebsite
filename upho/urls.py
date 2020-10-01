@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('materials', views.materials, name="materials"),
-    re_path( r'^olympiads/(?P<olymp_type>[a-z]+)(?:/(?P<static_location>[a-zA-Z]+))?/$', views.olympiads, name="olympiads"),
+    re_path( r'^olympiads/(?P<olymp_type>[a-z]+)(?:/(?P<static_location>[a-zA-Z_]+))?/$', views.olympiads, name="olympiads"),
     path('literature/<str:literature_type>', views.literature, name="literature"),
     path('ipho', views.ipho, name="ipho"),
     path('materials/<int:theme_id>/<str:task_type>', views.material, name="material"),
