@@ -167,9 +167,8 @@
             if (this.props.type === "regional") {
                 header += ",";
                 this.props.regional_locations.forEach(element => {
-                  let location_file_name = element.name.replace("_REGION", "")
                   options.push(
-                    <a key={element.name} className={"dropdown-item" + (element.name==="{{olymp_info.static_location.name}}" ? " active" : "")} href={'/olympiads/regional/' + location_file_name }>{element.readable}</a>
+                    <a key={element.name} className={"dropdown-item" + (element.name==="{{olymp_info.static_location.name}}" ? " active" : "")} href={'/olympiads/regional/' + element.name }>{element.readable}</a>
                   );
                 });
             }
