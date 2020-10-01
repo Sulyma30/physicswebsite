@@ -90,7 +90,7 @@ def olympiads(request, olymp_type='national', static_location=''):
     # All options for olympiad (each has at least one corresponding olympiad file)
     years = {tour : list(OlympEvent.objects.filter(olympiad=olympiad, olympfile__tour=tour, location__contains=static_location).order_by('-year').values_list('year', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
     grades = {tour : list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location, tour=tour).order_by('-grade').values_list('grade', flat=True).distinct()) for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct())}
-    tours = [{ "tour" : tour, "readable" : dict(OlympFile.TOUR_CHOICES)[tour] } for tour in list(OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location).values_list('tour', flat=True).distinct()) ]
+    tours = [{ "tour" : tour[0], "readable" : tour[1] } for tour in OlympFile.TOUR_CHOICES if OlympFile.objects.filter(event__olympiad=olympiad, event__location__contains=static_location, tour=tour[0]).exists() ]
     locations = { year : dict(OlympEvent.LOCATION_CHOICES)[OlympEvent.objects.get(olympiad=olympiad, year=year, location__contains=static_location).location] for year in list(OlympEvent.objects.filter(olympiad=olympiad, location__contains=static_location).values_list('year', flat=True).distinct()) }
     olymp_options = {"years" : years, "grades" : grades, "tours" : tours, "locations" : locations}
 

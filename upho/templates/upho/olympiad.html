@@ -43,6 +43,9 @@
       componentDidUpdate() {
           $('.selectpicker').selectpicker('refresh');
       }
+      componentDidMount() {
+          $('.selectpicker').selectpicker('refresh');
+      }
       render() {
         const options = [];
         this.props.all_grades[this.props.tour].forEach(element => {
@@ -69,6 +72,9 @@
             this.props.handleChangeYear(e);
         }
         componentDidUpdate() {
+          $('.selectpicker').selectpicker('refresh');
+        }
+        componentDidMount() {
           $('.selectpicker').selectpicker('refresh');
         }
        render() {
