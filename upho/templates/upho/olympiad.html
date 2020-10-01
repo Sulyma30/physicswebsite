@@ -139,7 +139,8 @@
 
         render() {
             //file name without '-solutions'
-            const file_name = this.props.type + ( "{{olymp_info.static_location.name}}" ? "-{{olymp_info.static_location.name}}-" : "-" ) + this.state.year + (this.state.grade == "0" ? "" : ("-"+this.state.grade) ) + '-' + this.state.tour;
+            let location_file_name = "{{olymp_info.static_location.name}}".replace("_region", "")
+            const file_name = this.props.type + ( location_file_name ? ( "-" + location_file_name + "-" ) : "-" ) + this.state.year + (this.state.grade == "0" ? "" : ("-"+this.state.grade) ) + '-' + this.state.tour;
             return(
                   <div className="pt-4">
                     <TourOptions tour={this.state.tour} all_tours={this.props.all_tours} handleChangeTour={this.handleChangeTour} />
