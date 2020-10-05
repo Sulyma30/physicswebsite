@@ -117,10 +117,22 @@
 
       {% if type == "theory" %}
       <div class="display-3 text-center text-white col-12 col-sm-auto">Підручники</div>
-      <a href="{% url 'literature' 'problems' %}" role="button" class="btn btn-outline-white btn-rounded mx-1 mr-auto">Задачники</a>
+      <div class="btn-group" role="group" aria-label="other_literature">
+        <a href="{% url 'literature' 'problems' %}" role="button" class="btn btn-outline-white waves-effect">Задачники</a>
+        <a href="{% url 'literature' 'exp' %}" role="button" class="btn btn-outline-white waves-effect">Підручники</a>
+      </div>
       {% elif type == "problems" %}
       <div class="display-3 text-center text-white col-12 col-sm-auto">Задачники</div>
-      <a href="{% url 'literature' 'theory' %}" role="button" class="btn btn-outline-white btn-rounded mx-1 mr-auto">Підручники</a>
+      <div class="btn-group" role="group" aria-label="other_literature">
+        <a href="{% url 'literature' 'theory' %}" role="button" class="btn btn-outline-white waves-effect">Підручники</a>
+        <a href="{% url 'literature' 'exp' %}" role="button" class="btn btn-outline-white waves-effect">Експеримент</a>
+      </div>
+      {% elif type == "exp" %}
+      <div class="display-3 text-center text-white col-12 col-sm-auto">Експеримент</div>
+      <div class="btn-group" role="group" aria-label="other_literature">
+        <a href="{% url 'literature' 'theory' %}" role="button" class="btn btn-outline-white waves-effect">Підручники</a>
+        <a href="{% url 'literature' 'problems' %}" role="button" class="btn btn-outline-white waves-effect">Задачники</a>
+      </div>
       {% endif %}
   
     </div>
@@ -135,25 +147,3 @@
 
 
 {% endblock %}
-
-<ul className="nav md-pills pills-grey pills-rounded mx-3">
-            <li className="nav-item px-0">
-              <a className="nav-link active mx-0" id="recommended-tab" data-toggle="tab" href="#recommended" role="tab"
-                aria-controls="recommended-tasks" aria-selected="true">Годні задачі</a>
-            </li>
-            <li className="nav-item px-0">
-              <a className="nav-link mx-0" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all-tasks"
-                aria-selected="false">Всі</a>
-            </li>
-            <li className="nav-item ml-auto pr-2">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                aria-expanded="false">Розділи</a>
-                <div class="dropdown-menu dropdown-dark dropdown-success">
-                    <a class="dropdown-item" href="#">Ландау</a>
-                    <a class="dropdown-item" href="#">Сівухін</a>
-                    <a class="dropdown-item" href="#">Джексон</a>
-                <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Пох</a>
-                </div>
-            </li>
-          </ul>
