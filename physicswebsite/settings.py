@@ -26,19 +26,21 @@ SECRET_KEY = '9@a^k5t4cen&swpi+d!w4i7zxxn^nki5%l#!n737bneh4g$*yp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Sulyma.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'upho.apps.UphoConfig',
+    'materials.apps.MaterialsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -119,10 +121,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = "/home/Sulyma/physicswebsite/static"
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = "/home/Sulyma/physicswebsite/media"
+MEDIA_ROOT = BASE_DIR / "media/"
 
 MEDIA_URL = '/media/'

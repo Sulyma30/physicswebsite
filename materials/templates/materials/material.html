@@ -1,0 +1,82 @@
+{% extends "materials/layout.html" %}
+{% load static %}
+
+{% block title %} Material {% endblock %}
+
+{% block script %}
+<script type="text/babel" src="{% static 'materials/material.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+<div class="material-header container-fluid d-flex flex-column justify-content-between">
+
+  <!-- Breadcrumb -->
+  <div class="row justify-content-end mt-3">
+    <nav class="col-12 col-sm-auto" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'materials' %}">{{theme.section.supersection.title}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'materials' %}">{{theme.section.title}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{theme.title}}</li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Header with buttons -->
+
+  <div class="row align-items-end px-4">
+    {% if task_type == "problems" %}
+    <div class="display-3 text-center text-white col-12 col-sm-auto">Задачі</div>
+    <a href="{% url 'material' theme.id 'theory' %}" role="button"
+      class="btn btn-outline-white btn-rounded mx-1 mb-3 mr-auto">Теорія</a>
+    {% elif task_type == "theory" %}
+    <div class="display-3 text-center text-white col-12 col-sm-auto">Теорія</div>
+    <a href="{% url 'material' theme.id 'problems' %}" role="button"
+      class="btn btn-outline-white btn-rounded mx-1 mb-3 mr-auto">Задачі</a>
+    {% endif %}
+
+    <!-- Button trigger modal !-->
+    <div role="button" class="text-white mb-3" data-toggle="modal" data-target="#ModalCenter">
+      Як тут вчитися?
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+      aria-hidden="true">
+
+      <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+      <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalLongTitle">З чого почати?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            1. Виберіть рівень та літературу, яку можна завантажити на цій же сторінці<br>
+            2. Почніть з теорії, потім задачі<br>
+            3. Комбінуйте теорію і задачі, поступово збільшуючи складність (зверху вниз)<br>
+            4. Якщо треба нову тему, то виберіть знизу сусідні або ж перейдіть до пошуку тем
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Зрозуміло</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  {% endblock %}
+
+  {% block main %}
+
+  <!-- Content -->
+  <div class="row justify-content-center px-2 pt-4 pt-xl-5" data-theme_id="{{ theme.id }}"
+    data-task_type="{{ task_type }}" id="material-content">
+  </div>
+
+  {% endblock %}

@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from upho import views
+from materials import views
 
 urlpatterns = [
     path('', include('upho.urls')),
+    path('', include('materials.urls')),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls'))
 ]
