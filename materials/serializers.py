@@ -13,4 +13,4 @@ class TaskSetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskSet
-        fields = ['literature', 'tasks']
+        fields = ['literature', 'difficulty', 'tasks']

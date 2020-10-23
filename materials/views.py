@@ -10,7 +10,7 @@ from django.db.models import Max
 from django.core.files.storage import FileSystemStorage
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import generics
 from .serializers import TaskSetSerializer
 
 # Create your views here.
@@ -33,35 +33,17 @@ def material_page(request, theme_id, task_type = "problems"):
 
     return render(request, "materials/material.html", { "task_type" : task_type , "theme" : theme })
 
-
 def literature(request, literature_type='theory'):
     return render(request, "materials/literature.html", { "type" : literature_type, "literature" : SafeString([ element.serialize() for element in Literature.objects.filter(literature_type=literature_type) ]),"supersections_list" : SafeString([element.serialize() for element in Supersection.objects.all()]) })
 
-@api_view(['GET'])
-def material(request, theme_id, task_type = "problems"):
-    # Query for requested theme
-    theme = get_object_or_404(Theme, pk=theme_id)
+class TaskSetList(generics.ListAPIView):
+    queryset = TaskSet.objects.all()
+    serializer_class = TaskSetSerializer
 
-    difficulties = TaskSet.DIFFICULTY_CHOICE
-
-    all_tasks = TaskSet.objects.filter(theme=theme, difficulty=None, literature__literature_type=task_type)
-    all_tasks_serialized = TaskSetSerializer(all_tasks, many=True).data
-    
-    chosen_tasks_serialized = []
-    for i in range(len(difficulties)):
-        chosen_tasks = TaskSet.objects.filter(theme=theme, difficulty=difficulties[i][0], literature__literature_type=task_type)
-        chosen_tasks_serialized.append(TaskSetSerializer(chosen_tasks, many=True).data)
-    material = {
-        'chosen' : {
-            difficulties[0][1] : chosen_tasks_serialized[0],
-            difficulties[1][1] : chosen_tasks_serialized[1],
-            difficulties[2][1] : chosen_tasks_serialized[2],
-            difficulties[3][1] : chosen_tasks_serialized[3]
-        },
-        'all' : all_tasks_serialized
-    }
-
-    return Response(material)
+    def get_queryset(self):
+        theme_id = self.kwargs['theme_id']
+        task_type = self.kwargs['task_type']
+        return TaskSet.objects.filter(theme_id=theme_id, literature__literature_type=task_type)
 
 # To do
 def ipho(request):
