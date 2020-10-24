@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-    # Olymp_type must be unique!!!
 class Olympiad(models.Model):
     OLYMP_CHOICES = [('national', 'Всеукраїнська'), ('regional', 'Обласна')]
     name = models.CharField(max_length=100)
@@ -36,7 +35,7 @@ class OlympEvent(models.Model):
 class OlympFile(models.Model):
     GRADE_CHOICES = [(0, 'Всі класи'), (8, '8 клас'), (9, '9 клас'), (10, '10 клас'), (11 ,'11 клас')]
     TOUR_CHOICES = [('theory', 'Теоретичний тур'), ('exp', 'Експериментальний тур')]
-    event = models.ForeignKey(OlympEvent, on_delete=models.CASCADE)
+    event = models.ForeignKey(OlympEvent,related_name='files', on_delete=models.CASCADE)
     grade = models.PositiveSmallIntegerField(choices=GRADE_CHOICES)
     tour = models.CharField(max_length=6, choices=TOUR_CHOICES)
     solutions = models.BooleanField(default=False)

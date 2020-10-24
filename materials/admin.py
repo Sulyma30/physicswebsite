@@ -53,7 +53,7 @@ admin.site.register(Theme, ThemeAdmin)
 class ProblemAdmin(admin.ModelAdmin):
     list_display = ('number', 'task_set')
     list_filter = ['task_set__difficulty']
-    search_fields = ['number', 'theme__title', 'theme__full_title' , 'literature__title']
+    search_fields = ['number', 'task_set__theme__title', 'task_set__theme__full_title' , 'task_set__literature__title']
 
 admin.site.register(Problem, ProblemAdmin)
 
@@ -61,7 +61,7 @@ admin.site.register(Problem, ProblemAdmin)
 class TheoryAdmin(admin.ModelAdmin):
     list_display = ('start_page', 'task_set' )
     list_filter = ['task_set__difficulty']
-    search_fields = ['start_page', 'end_page', 'theme__title', 'theme__full_title' , 'literature__title']
+    search_fields = ['start_page', 'end_page', 'task_set__theme__title', 'task_set__theme__full_title' , 'task_set__literature__title']
 
 
 admin.site.register(Theory, TheoryAdmin)
@@ -74,9 +74,9 @@ class LiteratureAdmin(admin.ModelAdmin):
 admin.site.register(Literature, LiteratureAdmin)
 
 class TaskSetAdmin(admin.ModelAdmin):
-    list_display = ('theme', 'literature')
+    list_display = ('theme', 'literature', 'difficulty')
     list_filter = ['difficulty']
-    search_fields = ['theme', 'literature']
+    search_fields = ['theme__title','theme__full_title' ,'literature__title']
     inlines = [ProblemInline]
 
 admin.site.register(TaskSet, TaskSetAdmin)

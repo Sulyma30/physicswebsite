@@ -38,5 +38,3 @@ class OlympEventAdmin(admin.ModelAdmin):
     inlines = [OlympFileInline,]
 
 admin.site.register(OlympEvent, OlympEventAdmin)
-
-# Requirements !!!

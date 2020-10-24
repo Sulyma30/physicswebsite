@@ -1,5 +1,3 @@
-import re
-
 from rest_framework import serializers
 from .models import Theme, Literature, Problem, TaskSet
 
