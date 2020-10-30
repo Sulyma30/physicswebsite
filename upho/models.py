@@ -38,5 +38,5 @@ class OlympFile(models.Model):
     event = models.ForeignKey(OlympEvent,related_name='files', on_delete=models.CASCADE)
     grade = models.PositiveSmallIntegerField(choices=GRADE_CHOICES)
     tour = models.CharField(max_length=6, choices=TOUR_CHOICES)
-    solutions = models.BooleanField(default=False)
-    pdf = models.FileField()
+    problems = models.FileField(null=True, blank=True)
+    solutions = models.FileField(null=True, blank=True)

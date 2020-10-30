@@ -5,7 +5,7 @@ from django.utils.safestring import SafeString
 from .models import Supersection, Section, Theme, Literature, Requirement, Theory, Problem, TaskSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import TaskSetSerializer
+from .serializers import TaskSetSerializer, SectionListSerializer
 
 # Create your views here.
 
@@ -22,6 +22,15 @@ def material(request, theme_id, task_type='problems'):
     taskSets = TaskSet.objects.filter(theme=theme, literature__literature_type=task_type)
     serializer = TaskSetSerializer(taskSets, many=True)
     return Response(serializer.data)
+    
+@api_view(['GET'])
+def materials(request):
+    sections = Section.objects.all()
+    serializer = SectionListSerializer(sections, many=True)
+    return Response(serializer.data)
 
 def ipho(request):
-    return render(request, "upho/ipho.html")
+    return render(request, "materials/ipho.html")
+
+def materials_page(request):
+    return render(request, "materials/materials.html")

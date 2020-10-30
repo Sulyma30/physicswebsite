@@ -13,11 +13,11 @@ def index(request):
     return render(request, 'upho/index.html')
 
 def olympiad_page(request, olymp_type='national', static_location=''):
-    return render(request, 'upho/olympiad.html')
+    return render(request, 'upho/olympiad.html', { "olymp_type" : olymp_type, "static_location" : static_location })
 
 @api_view(['GET'])
 def olympiad(request, olymp_type='national', static_location=''):
     olympiad = get_list_or_404(Olympiad, olymp_type=olymp_type)
-    events = OlympEvent.objects.filter(olympiad__olymp_type=olymp_type, location__contains=static_location)
+    events = OlympEvent.objects.filter(olympiad__olymp_type=olymp_type, location__contains=static_location).order_by('-year')
     serializer = OlympiadEventSerializer(events, many=True)
     return Response(serializer.data)

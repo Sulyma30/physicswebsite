@@ -5,12 +5,6 @@ class Supersection(models.Model):
     title = models.CharField(max_length=100)
     order = models.PositiveSmallIntegerField(default=0)
 
-    def serialize(self):
-        return {
-            "title" : self.title,
-            "id" : self.id
-        }
-
     def __str__(self):
         return f"{self.title}"
 
@@ -19,12 +13,6 @@ class Section(models.Model):
     order = models.PositiveSmallIntegerField(default=0)
     supersection = models.ForeignKey(Supersection, on_delete=models.CASCADE)
 
-    def serialize(self):
-        return {
-            "title" : self.title,
-            "id" : self.id
-        }
-
     def __str__(self):
         return f"{self.title}"
 
@@ -32,7 +20,7 @@ class Theme(models.Model):
     title = models.CharField(max_length=100)
     full_title = models.CharField(max_length=200)
     order = models.PositiveSmallIntegerField(default=0)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, related_name="themes", on_delete=models.CASCADE)
 
     def serialize(self):
         return {
