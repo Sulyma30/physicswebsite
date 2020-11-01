@@ -21,3 +21,6 @@ def olympiad(request, olymp_type='national', static_location=''):
     events = OlympEvent.objects.filter(olympiad__olymp_type=olymp_type, location__contains=static_location).order_by('-year')
     serializer = OlympiadEventSerializer(events, many=True)
     return Response(serializer.data)
+
+def ipho(request):
+    return render(request, "upho/ipho.html")

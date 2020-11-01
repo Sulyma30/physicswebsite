@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Theme, Literature, Problem, TaskSet, Section
+from .models import Theme, Literature, Problem, TaskSet, Section, Supersection
+
+class LiteratureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Literature
+        fields = ['id', 'title', 'short_title', 'year', 'pdf', 'djvu']
 
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:

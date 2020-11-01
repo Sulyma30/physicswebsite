@@ -1,0 +1,154 @@
+{% extends "upho/layout.html" %}
+
+{% block title %} International Olympiads {% endblock %}
+
+{% block script %}
+<script>
+    $(function () {
+        $(".sticky").sticky({
+          topSpacing: 90
+          , zIndex: 2
+          , stopper: "#footer"
+        });
+      });
+    $('body').scrollspy({ target: '#scrollspy', offset: 100 })
+</script>
+{% endblock %}
+
+{% block header %}
+<div class="material-header container-fluid d-flex pl-4 align-items-end">
+    <div class="display-4 text-white">Міжнародні олімпіади з фізики</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid" id="material-content">
+    <!--Grid row-->
+    <div class="row p-3 pt-5">
+
+        <!--Grid column: Content-->
+        <div class="col-lg-10 col-md-12">
+                <!--Section: Intro-->
+                <section id="offline-ipho">
+
+                    <!--Title-->
+
+                    <h2 class="secondary-heading mb-4">Учнівські офлайн олімпіади</h2>
+
+                    <!--Description-->
+
+                    <p> <a class="font-weight-bold black-text" href="https://ipho-new.org">International Physics Olympiad</a> (IPhO) - головна міжнародна учнівська олімпіада з фізики. Одна з найстаріших олімпіад, проводиться з 1967 року, і в ній бере участь більше 80 країн. Щороку Україну там представляє команда, що складається з 5 учнів та учениць, яких відбирають серед переможців 4 етапу Всеукраїнської олімпіади. Завдання та розв'язки минулорічних олімпіад можна знайти на <a class="black-text" href="https://ipho-new.org"> офіційному сайті </a> , переклад завдань на російську мову - <a href="https://4ipho.ru"> rus</a>. </p>
+                    <br>
+                    <p> На наступні олімпіади від України немає постійного представництва, але розв'язування задач цих олімпіад буде корисним при підготовці до 4 етапу Всеукраїнської олімпіади та IPhO:</p>
+                
+                    <ul>
+                        <li><a class="font-weight-bold black-text" href="#">Asian Physics Olympiad </a> (APHO) - азіатська олімпіада з фізики. Завдання тут зазвичай складніші, ніж на IPhO. Завдання можна знайти за посиланнями<a href="https://apho2020.tw/site/page.aspx?pid=280&sid=1316&lang=en"> eng</a>,
+                           <a href="https://4ipho.ru"> rus </a>
+    
+
+                        </li>
+                        <li><a class="font-weight-bold black-text" href="#">Туймаада</a><a href="http://tuymaada.lensky-kray.ru"> rus</a></li>
+                        <li><a class="font-weight-bold black-text" href="#">International Zhautykov Olympiad </a> (IZho) <a href="https://izho.kz"> rus, eng </a></li>
+                        <li><a class="font-weight-bold black-text" href="#">European Physics Olympiad</a> (EuPhO) <a href="https://eupho.ee/archive/"> eng</a></li>
+                        <li><a class="font-weight-bold black-text" href="#">International Junior Science Olympiad </a> (IJSO) <a href="https://www.ijsoweb.org/"> eng, </a> <a href="https://4ipho.ru"> rus</a></li>
+                        <li><a class="font-weight-bold black-text" href="#">Nordic-Baltic Physics Olympiad </a> (NBPhO) <a href="https://nbpho.ee/"> eng, rus </a></li>
+                    </ul>
+                    
+                    
+
+                </section>
+                <!--/Section: Intro-->
+
+                <hr class="mt-4 mb-5">
+
+                <!--Section: -->
+                <section id="student-ipho">
+
+                   <!--Title-->
+                   <h2 class="section-heading mb-4">
+                       Студентські олімпіади
+                   </h2>
+
+                   <ul>
+                       <li><a class="font-weight-bold black-text" href="#">Boston Area Undergraduate Physics Competition </a> (BAUPC) <a href="http://liquids.seas.harvard.edu/oleg/competition/prev.html"> eng</a></li>
+                   </ul>
+               </section>
+               <!--/Section: -->
+
+                <hr class="mt-4 mb-5">
+
+                <!--Section: -->
+                <section id="team-ipho">
+
+                    <!--Title-->
+                    <h2 class="section-heading mb-4">
+                        Командні змагання
+                    </h2>
+
+                    <ul>
+                        <li><a class="font-weight-bold black-text" href="#">International Young Physicists' Tournament </a> (IYPT) (для школярів) <a  href="https://archive.iypt.org/problems/"> eng</a></li>
+                        <li> <a class="font-weight-bold black-text" href="https://physicsbrawl.org/en/default/last-years">Online Physics Brawl </a>( команди 1-5 людей, для школярів та студентів)</li>
+                        <li><a class="font-weight-bold black-text" href="#">International Physicists' Tournament</a> (IPT) (для студентів) <a href="https://iptnet.info/problems/"> eng</a></li>
+                        <li><a class="font-weight-bold black-text" href="https://ortvay.elte.hu/main.html">Rudolf Ortvay International Competition in Physics</a> (для студентів) </li>
+                        <li><a class="font-weight-bold black-text" href="http://www.uphysicsc.com/home.html"> The University Physics Competition </a>(для студентів)</li>
+                    </ul>
+                </section>
+                <!--/Section: -->
+                
+                <hr class="mt-4 mb-5">
+
+                 <!--Section: -->
+                 <section id="other-ipho">
+
+                    <!--Title-->
+                    <h2 class="section-heading mb-4">
+                        Інші олімпіади
+                    </h2>
+
+                    <ul>
+                        <li><a class="font-weight-bold black-text" href="#">Mathematical and Physical Journal for high schools KöMaL Contest</a> <a href="https://www.komal.hu/verseny/korabbi.e.shtml"> eng</a></li>
+                        <li><a class="font-weight-bold black-text" href="http://pupc.princeton.edu/Archive.php">Princeton University Physics Competition</a> (індивідуальні офлайн змагання, та командні онлайн змагання для школярів)</li>
+                    </ul>
+                </section>
+                <!--/Section: -->
+
+        </div>
+            <!--Section: Docs content-->
+        <!--Grid column: Content-->
+
+
+        <!--Grid column: Scrollspy-->
+        <div class="col-lg-2">
+
+            <!-- Sticky content -->
+            <div class="sticky">
+
+                <!--Scrollspy-->
+                <div id="scrollspy">
+                    
+                    <!-- Links -->
+                    <ul class="nav nav-pills default-pills smooth-scroll" data-allow-hashes>
+                        <li class="nav-item"><a class="nav-link active" href="#offline-ipho">Учнівські офлайн олімпіади</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#student-ipho">Олімпіади для студентів</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#team-ipho">Командні змагання</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#other-ipho">Інше</a>
+                        </li>
+                    </ul>
+                    <!-- Links -->
+                    
+                </div>
+                <!--Scrollspy-->
+
+            </div>
+            <!-- Sticky content -->
+
+        </div>
+        <!--Grid column: Scrollspy-->
+    </div>
+    <!--Grid row-->
+</div>
+
+{% endblock %}
