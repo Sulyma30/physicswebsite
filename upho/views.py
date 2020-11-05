@@ -1,5 +1,5 @@
 import json
-from django.shortcuts import get_list_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import JsonResponse
 
 from .models import Olympiad, OlympEvent, OlympFile
@@ -13,7 +13,9 @@ def index(request):
     return render(request, 'upho/index.html')
 
 def olympiad_page(request, olymp_type='national', static_location=''):
-    return render(request, 'upho/olympiad.html', { "olymp_type" : olymp_type, "static_location" : static_location })
+    olympiad = get_object_or_404(Olympiad, olymp_type=olymp_type)
+    regions = ['KYIV', 'ODESA']
+    return render(request, 'upho/olympiad.html', { "olympiad" : olympiad, "static_location" : static_location, "regions" : regions })
 
 @api_view(['GET'])
 def olympiad(request, olymp_type='national', static_location=''):

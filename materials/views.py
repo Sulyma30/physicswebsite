@@ -11,7 +11,7 @@ from .serializers import TaskSetSerializer, SectionListSerializer, LiteratureSer
 
 def material_page(request, theme_id, task_type = "problems"):
     theme = get_object_or_404(Theme, pk=theme_id)
-    return render(request, "materials/material.html", { "task_type" : task_type , "theme" : theme })
+    return render(request, "materials/material.html", { "task_type" : task_type , "theme" : theme})
 
 @api_view(['GET'])
 def material(request, theme_id, task_type='problems'):

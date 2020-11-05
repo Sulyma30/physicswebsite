@@ -22,20 +22,15 @@ class Theme(models.Model):
     order = models.PositiveSmallIntegerField(default=0)
     section = models.ForeignKey(Section, related_name="themes", on_delete=models.CASCADE)
 
-    def serialize(self):
-        return {
-            "title" : self.title,
-            "id" : self.id,
-            "full_title" : self.full_title,
-            "requirements" : [requirement.parent_theme.title for requirement in Requirement.objects.filter(child_theme=self)]
-        }
-
     def __str__(self):
         return f"{self.title}"
 
 class Requirement(models.Model):
-    parent_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="requirement")
-    child_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="theme")
+    parent_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="themes")
+    child_theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="requirements")
+
+    def __str__(self):
+        return f"{self.parent_theme.title}"
 
 class Literature(models.Model):
 
@@ -72,14 +67,16 @@ class TaskSet(models.Model):
 class Theory(models.Model):
     start_page = models.PositiveSmallIntegerField(default=0)
     end_page = models.PositiveSmallIntegerField(default=0)
-    chosen = models.BooleanField(default=False)
     task_set = models.ForeignKey(TaskSet, related_name='theory_tasks', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.start_page}-{self.end_page}"
     
 
 class Problem(models.Model):
     number = models.CharField(max_length=10)
     chosen = models.BooleanField(default=False)
-    task_set = models.ForeignKey(TaskSet, related_name='tasks', on_delete=models.CASCADE)
+    task_set = models.ForeignKey(TaskSet, related_name='problem_tasks', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.number

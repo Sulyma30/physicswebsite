@@ -5,23 +5,42 @@
 
 {% block script %}
 
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
-    <!-- Add JSX to a Project before deployment! -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<!-- Add JSX to a Project before deployment! -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <script src="{% static 'upho/olympiad.js' %}"></script>
+<script src="{% static 'upho/olympiad.js' %}"></script>
 
 {% endblock %}
 
 {% block main %}
 
-    <!-- Olympiad files  -->
+<!-- Olympiad files  -->
 
-    <div class="olymp-files container-fluid" id="olymp-files" data-olymp_type="{{ olymp_type }}" data-static_location="{{ static_location }}">
+<div class="olymp-files container-fluid d-flex flex-column justify-content-center">
+    <div class="container">
+        <h1 class="text-center h2 text-white animated fadeInDown">{{ olympiad.name }}</h1>
+        {% if olympiad.olymp_type == 'regional' %}
+            <div class="dropdown d-flex justify-content-center">
+                <div class="dropdown-toggle h2 text-white" role="button" id="dropdownMenuRegions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ static_location }}</div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuRegions">
+                    {% for region in regions %}
+                        {% if region == static_location %}
+                            <a class="dropdown-item active" href="{% url 'olympiads' 'regional' region %}">{{ region }}</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'olympiads' 'regional' region %}">{{ region }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
+    <div class="container animated" id="olymp-files" data-olymp_type="{{ olympiad.olymp_type }}"
+        data-static_location="{{ static_location }}"></div>
+</div>
 
 {% endblock %}

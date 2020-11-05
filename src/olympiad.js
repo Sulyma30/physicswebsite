@@ -161,14 +161,6 @@ class TourOptions extends React.Component {
       }
   }
 
-  class OlympHeader extends React.Component {
-      render() {
-        return(
-          <h1 className="text-center h2 text-white animated fadeInDown">IV-й етап Всеукраїнської учнівської олімпіади з фізики</h1>
-        );
-      }
-  }
-
   class OlympFiles extends React.Component {
       render() {
         const tours = [];
@@ -185,8 +177,7 @@ class TourOptions extends React.Component {
         })
         grades.sort((a, b) => b - a);
           return(
-              <div className="d-flex flex-column justify-content-center align-items-center h-100">
-                  <OlympHeader type={this.props.type} />
+              <div className="d-flex flex-column justify-content-center align-items-center">
                   <OlympSelector type={this.props.type} tour_options={tours} grade_options={grades} events={this.props.events} />
               </div>
           );

@@ -1,15 +1,18 @@
 from rest_framework import serializers
 from .models import Theme, Literature, Problem, TaskSet, Section, Supersection
 
+import re
+
 class LiteratureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Literature
         fields = ['id', 'title', 'short_title', 'year', 'pdf', 'djvu']
 
 class ThemeSerializer(serializers.ModelSerializer):
+    requirements = serializers.StringRelatedField(many=True)
     class Meta:
         model = Theme
-        fields = ['id', 'full_title', 'title', 'order']
+        fields = ['id', 'full_title', 'title', 'order', 'requirements']
 
 class SectionListSerializer(serializers.ModelSerializer):
     themes = serializers.SerializerMethodField()
@@ -24,8 +27,14 @@ class SectionListSerializer(serializers.ModelSerializer):
         return ThemeSerializer(theme_set, many=True).data
 
 class TaskSetSerializer(serializers.ModelSerializer):
-    tasks = serializers.StringRelatedField(many=True)
+    problem_tasks = serializers.StringRelatedField(many=True)
+    theory_tasks = serializers.StringRelatedField(many=True)
+    literature = LiteratureSerializer()
 
     class Meta:
         model = TaskSet
-        fields = ['literature', 'difficulty', 'tasks']
+        fields = ['literature', 'difficulty', 'problem_tasks', 'theory_tasks']
+    
+    
+
+    

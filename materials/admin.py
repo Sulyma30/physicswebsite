@@ -80,3 +80,5 @@ class TaskSetAdmin(admin.ModelAdmin):
     inlines = [ProblemInline]
 
 admin.site.register(TaskSet, TaskSetAdmin)
+
+admin.site.register(Requirement)
