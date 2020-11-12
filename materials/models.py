@@ -60,9 +60,12 @@ class TaskSet(models.Model):
     DIFFICULTY_CHOICE = [
         (0, 'novice'), (1, 'advanced'), (2, 'expert'), (3, 'math')
     ]
-    difficulty = models.PositiveSmallIntegerField(null=True, choices=DIFFICULTY_CHOICE)
+    difficulty = models.PositiveSmallIntegerField(null=True, blank=True, choices=DIFFICULTY_CHOICE)
     theme = models.ForeignKey(Theme, related_name='task_sets', on_delete=models.CASCADE)
     literature = models.ForeignKey(Literature, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.theme.title}, {self.literature.short_title}'
 
 class Theory(models.Model):
     start_page = models.PositiveSmallIntegerField(default=0)

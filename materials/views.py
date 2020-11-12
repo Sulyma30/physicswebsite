@@ -11,7 +11,15 @@ from .serializers import TaskSetSerializer, SectionListSerializer, LiteratureSer
 
 def material_page(request, theme_id, task_type = "problems"):
     theme = get_object_or_404(Theme, pk=theme_id)
-    return render(request, "materials/material.html", { "task_type" : task_type , "theme" : theme})
+    try:
+        next_theme = Theme.objects.get(order=theme.order + 1)
+    except Theme.DoesNotExist:
+        next_theme = None
+    try:
+        previous_theme = Theme.objects.get(order=theme.order - 1)
+    except Theme.DoesNotExist:
+        previous_theme = None
+    return render(request, "materials/material.html", { "task_type" : task_type , "theme" : theme, "next_theme" : next_theme, "previous_theme" : previous_theme})
 
 @api_view(['GET'])
 def material(request, theme_id, task_type='problems'):

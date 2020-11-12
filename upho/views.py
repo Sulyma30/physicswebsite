@@ -2,7 +2,7 @@ import json
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.http import JsonResponse
 
-from .models import Olympiad, OlympEvent, OlympFile
+from .models import Olympiad, OlympEvent, OlympFile, Location
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -14,13 +14,17 @@ def index(request):
 
 def olympiad_page(request, olymp_type='national', static_location=''):
     olympiad = get_object_or_404(Olympiad, olymp_type=olymp_type)
-    regions = ['KYIV', 'ODESA']
-    return render(request, 'upho/olympiad.html', { "olympiad" : olympiad, "static_location" : static_location, "regions" : regions })
+    if olymp_type == 'regional' and static_location == '':
+        location = 'KYIV'
+    else:
+        location = static_location
+    regions = Location.objects.filter(olympevent__olympiad__olymp_type='regional').distinct()
+    return render(request, 'upho/olympiad.html', { "olympiad" : olympiad, "static_location" : location, "regions" : regions })
 
 @api_view(['GET'])
 def olympiad(request, olymp_type='national', static_location=''):
     olympiad = get_list_or_404(Olympiad, olymp_type=olymp_type)
-    events = OlympEvent.objects.filter(olympiad__olymp_type=olymp_type, location__contains=static_location).order_by('-year')
+    events = OlympEvent.objects.filter(olympiad__olymp_type=olymp_type, location__name__contains=static_location).order_by('-year')
     serializer = OlympiadEventSerializer(events, many=True)
     return Response(serializer.data)
 

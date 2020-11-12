@@ -10,26 +10,20 @@ class Olympiad(models.Model):
     def __str__(self):
         return self.name
 
+class Location(models.Model):
+    TYPE_CHOICES = [('city', 'місто'), ('region', 'область')]
+    name = models.CharField(max_length=100)
+    location_type = models.CharField(max_length=100, choices=TYPE_CHOICES)
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        representation = f"м. {self.title}" if self.location_type == 'city' else f"{self.title} обл."
+        return representation
+
 class OlympEvent(models.Model):
-    LOCATION_CHOICES = [(
-        'Міста',(
-            ('KYIV','м. Київ'),
-            ('LVIV', 'м. Львів'),
-            ('ODESA', 'м. Одеса'),
-            ('KHERSON', 'м. Херсон'),
-            ('KRYVYI_RIH', 'м. Кривий Ріг'),
-            ('SUMY', 'м. Суми'),
-            ('IVANO-FRANKIVSK', 'м. Івано-Франківськ'),)
-        ),(
-        'Області', (
-            ('LVIV_REGION', 'Львівська обл.'),
-            ('ODESA_REGION', 'Одеська обл.'),
-            ('KHARKIV_REGION', 'Харківська обл.'),)
-        ),
-    ]
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
-    location = models.CharField(max_length=30, choices=LOCATION_CHOICES)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
 
 class OlympFile(models.Model):

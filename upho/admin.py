@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory, ModelForm
 from django.forms import BaseInlineFormSet
 
 # Register your models here.
-from .models import Olympiad, OlympEvent, OlympFile
+from .models import Olympiad, OlympEvent, OlympFile, Location
 
 class OlympFileInlineAdminForm(ModelForm):
     class Meta:
@@ -38,3 +38,4 @@ class OlympEventAdmin(admin.ModelAdmin):
     inlines = [OlympFileInline,]
 
 admin.site.register(OlympEvent, OlympEventAdmin)
+admin.site.register(Location)

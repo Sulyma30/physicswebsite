@@ -13,7 +13,7 @@
 <!-- Add JSX to a Project before deployment! -->
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-<script src="{% static 'upho/olympiad.js' %}"></script>
+<script src="{% static 'upho/src/olympiad.js' %}"></script>
 
 {% endblock %}
 
@@ -26,14 +26,26 @@
         <h1 class="text-center h2 text-white animated fadeInDown">{{ olympiad.name }}</h1>
         {% if olympiad.olymp_type == 'regional' %}
             <div class="dropdown d-flex justify-content-center">
-                <div class="dropdown-toggle h2 text-white" role="button" id="dropdownMenuRegions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ static_location }}</div>
+                {% for region in regions %}
+                    {% if region.name == static_location %}
+                    <div class="dropdown-toggle h2 text-white" role="button" id="dropdownMenuRegions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if region.location_type == "city" %}
+                            м. {{ region.title }}
+                        {% elif region.location_type == "region" %}
+                            {{ region.title }} обл.
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuRegions">
                     {% for region in regions %}
-                        {% if region == static_location %}
-                            <a class="dropdown-item active" href="{% url 'olympiads' 'regional' region %}">{{ region }}</a>
-                        {% else %}
-                            <a class="dropdown-item" href="{% url 'olympiads' 'regional' region %}">{{ region }}</a>
-                        {% endif %}
+                            <a class="dropdown-item {% if region.name == static_location %} active {% endif %}" href="{% url 'olympiads' 'regional' region.name %}">
+                                {% if region.location_type == "city" %}
+                                    м. {{ region.title }}
+                                {% elif region.location_type == "region" %}
+                                    {{ region.title }} обл.
+                                {% endif %}
+                            </a>
                     {% endfor %}
                 </div>
             </div>

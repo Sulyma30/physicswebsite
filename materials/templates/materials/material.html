@@ -78,12 +78,16 @@
   <div class="row justify-content-center px-2 pt-4 pt-xl-5" data-theme_id="{{ theme.id }}"
     data-task_type="{{ task_type }}" id="material-content">
   </div>
-  <div class="row justify-content-sm-between justify-content-center my-4">
+  <div class="px-4 row justify-content-sm-between justify-content-center my-4">
     <div class="pl-3 col-sm-6 col-12 d-flex justify-content-center justify-content-sm-start">
-      <a href="" class="btn btn-outline-bg"><i class="fas fa-lg fa-angle-left"></i> Previous </a>
+      {% if previous_theme %}
+      <a href="{% url 'material' previous_theme.id task_type %}" class="btn btn-outline-bg"><i class="fas fa-lg fa-angle-left"></i> {{ previous_theme.title }} </a>
+      {% endif %}
     </div>
     <div class="pr-3 col-sm-6 col-12 d-flex justify-content-center justify-content-sm-end">
-      <a href="" class="btn btn-outline-bg"> Next <i class="fas fa-lg fa-angle-right"></i></a>
+      {% if next_theme %}
+      <a href="{% url 'material' next_theme.id task_type %}" class="btn btn-outline-bg"> {{ next_theme.title }} <i class="fas fa-lg fa-angle-right"></i></a>
+      {% endif %}
     </div>
   </div>
 
