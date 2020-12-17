@@ -38,8 +38,8 @@ def literature(request, literature_type='theory'):
     serializer = LiteratureSerializer(literature, many=True)
     return Response(serializer.data)
     
-def materials_page(request):
-    return render(request, "materials/materials.html")
+def materials_page(request, selected_type='', selected_title=''):
+    return render(request, "materials/materials.html", {'selected_type' : selected_type, 'selected_title' : selected_title})
 
 @api_view(['GET'])
 def materials(request):

@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from .models import Theme, Literature, Problem, TaskSet, Section, Supersection
-
-import re
+from .models import Theme, Literature, Problem,Theory, TaskSet, Section, Supersection
+from .problems import problems_list_zip
 
 class LiteratureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,14 +26,22 @@ class SectionListSerializer(serializers.ModelSerializer):
         return ThemeSerializer(theme_set, many=True).data
 
 class TaskSetSerializer(serializers.ModelSerializer):
-    problem_tasks = serializers.StringRelatedField(many=True)
-    theory_tasks = serializers.StringRelatedField(many=True)
+    tasks = serializers.SerializerMethodField()
     literature = LiteratureSerializer()
 
     class Meta:
         model = TaskSet
-        fields = ['literature', 'difficulty', 'problem_tasks', 'theory_tasks']
+        fields = ['id', 'literature', 'difficulty', 'tasks']
     
-    
+    def get_tasks(self, instance):
+        if instance.literature.literature_type == 'problems':
+            problem_set = Problem.objects.filter(task_set=instance.id).values_list('number', flat=True)
+            return problems_list_zip(problem_set)
+        elif instance.literature.literature_type == 'theory':
+            elements = Theory.objects.filter(task_set=instance.id)
+            theory = []
+            for element in elements:
+                theory += [f"{element.start_page}-{element.end_page}"]
+            return theory
 
     

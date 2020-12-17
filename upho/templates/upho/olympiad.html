@@ -21,38 +21,42 @@
 
 <!-- Olympiad files  -->
 
-<div class="olymp-files container-fluid d-flex flex-column justify-content-center">
+<div class="olymp-files container-fluid d-flex flex-column justify-content-end align-items-center">
     <div class="container">
         <h1 class="text-center h2 text-white animated fadeInDown">{{ olympiad.name }}</h1>
         {% if olympiad.olymp_type == 'regional' %}
-            <div class="dropdown d-flex justify-content-center">
-                {% for region in regions %}
-                    {% if region.name == static_location %}
-                    <div class="dropdown-toggle h2 text-white" role="button" id="dropdownMenuRegions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% if region.location_type == "city" %}
-                            м. {{ region.title }}
-                        {% elif region.location_type == "region" %}
-                            {{ region.title }} обл.
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                {% endfor %}
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuRegions">
-                    {% for region in regions %}
-                            <a class="dropdown-item {% if region.name == static_location %} active {% endif %}" href="{% url 'olympiads' 'regional' region.name %}">
-                                {% if region.location_type == "city" %}
-                                    м. {{ region.title }}
-                                {% elif region.location_type == "region" %}
-                                    {{ region.title }} обл.
-                                {% endif %}
-                            </a>
-                    {% endfor %}
-                </div>
+        <div class="dropdown d-flex justify-content-center">
+            {% for region in regions %}
+            {% if region.name == static_location %}
+            <div class="dropdown-toggle h2 text-white" role="button" id="dropdownMenuRegions" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {% if region.location_type == "city" %}
+                м. {{ region.title }}
+                {% elif region.location_type == "region" %}
+                {{ region.title }} обл.
+                {% endif %}
             </div>
+            {% endif %}
+            {% endfor %}
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuRegions">
+                {% for region in regions %}
+                <a class="dropdown-item {% if region.name == static_location %} active {% endif %}"
+                    href="{% url 'olympiads' 'regional' region.name %}">
+                    {% if region.location_type == "city" %}
+                    м. {{ region.title }}
+                    {% elif region.location_type == "region" %}
+                    {{ region.title }} обл.
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
         {% endif %}
     </div>
-    <div class="container animated" id="olymp-files" data-olymp_type="{{ olympiad.olymp_type }}"
-        data-static_location="{{ static_location }}"></div>
+    <div class="col-sm-8 col-lg-9" id="olymp-files" data-olymp_type="{{ olympiad.olymp_type }}"
+        data-static_location="{{ static_location }}">
+    </div>
 </div>
 
 {% endblock %}
+

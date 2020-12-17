@@ -14,8 +14,8 @@
   <div class="row justify-content-end mt-3">
     <nav class="col-12 col-sm-auto" aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'materials' %}">{{theme.section.supersection.title}}</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'materials' %}">{{theme.section.title}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'materials' 'supersection' theme.section.supersection.title %}">{{theme.section.supersection.title}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'materials' 'section' theme.section.title %}">{{theme.section.title}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{theme.title}}</li>
       </ol>
     </nav>

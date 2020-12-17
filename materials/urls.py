@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
     path('literature/<str:literature_type>', views.literature_page, name="literature"),
     path('materials', views.materials_page, name="materials"),
-    path('materials/<int:theme_id>/<str:task_type>', views.material_page, name="material"),
+    path('materials/<str:selected_type>/<str:selected_title>', views.materials_page, name="materials"),
+    path('material/<int:theme_id>/<str:task_type>', views.material_page, name="material"),
 
     # API
     re_path('^materials_api/(?P<theme_id>[0-9]+)/(?P<task_type>[a-z]+)$', views.material),

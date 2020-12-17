@@ -79,7 +79,7 @@ class Theory(models.Model):
 class Problem(models.Model):
     number = models.CharField(max_length=10)
     chosen = models.BooleanField(default=False)
-    task_set = models.ForeignKey(TaskSet, related_name='problem_tasks', on_delete=models.CASCADE)
+    task_set = models.ForeignKey(TaskSet, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.number
