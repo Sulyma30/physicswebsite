@@ -1,10 +1,8 @@
 physicswebsite/settings.py
 db.sqlite3
-media/Yavorskiy_Mechanics_2003.djvu
-media/national-2019-theory.pdf
-media/national-2018-8-exp.pdf
-media/national-2011-10-theory.pdf
+media
 static
 migrations
 __pycache__
 node_modules
+csv_files(15.09.20)
