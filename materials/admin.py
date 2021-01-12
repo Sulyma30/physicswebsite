@@ -5,7 +5,7 @@ import re
 # Register your models here.
 
 from .models import Supersection, Section, Theme, Literature, Requirement, Theory, Problem, TaskSet
-from .problems import problems_list_zip
+from .problems import problems_list_zip, unzip_problems
 
 class SectionInline(admin.TabularInline):
     model = Section
@@ -46,9 +46,29 @@ class TaskSetModelForm(forms.ModelForm):
 
     def save(self, commit=True):
         tasks = self.cleaned_data.get('tasks', None)
-        # With info below I can get TaskSet, transform tasks and do the following:
-        # get all tasks before they were changed (the same taskset) and compare with the new set; then delete or add or change (difficulty) every task that was deleted or added. It sufficient to use get_or_create when create a new one (for example, when this task already exists with another difficulty)
-        return super(TaskSetModelForm, self).save(commit=commit)
+        taskSet = super(TaskSetModelForm, self).save(commit=False)
+
+        if taskSet.literature.literature_type == 'problems':
+            new_tasks = unzip_problems(tasks)
+            old_tasks = Problem.objects.filter(task_set=taskSet)
+            for task in new_tasks:
+                obj, created = Problem.objects.get_or_create(number=task, task_set=taskSet)
+            for task in old_tasks:
+                if task.number not in new_tasks:
+                    task.delete()
+
+        if taskSet.literature.literature_type == 'theory':
+            new_tasks = tasks.split(',')
+            old_tasks = Theory.objects.filter(task_set=taskSet)
+            for task in new_tasks:
+                pages = task.split('-')
+                obj, created = Theory.objects.get_or_create(start_page=pages[0], end_page=pages[1], task_set=taskSet)
+            for task in old_tasks:
+                if task.__str__() not in new_tasks:
+                    task.delete()
+
+        taskSet.save()
+        return taskSet
     
     def __init__(self, *args, **kwargs):
         if 'instance' in kwargs:
@@ -112,9 +132,21 @@ class TaskSetAdmin(admin.ModelAdmin):
     list_display = ('theme', 'literature', 'difficulty')
     list_filter = ['difficulty']
     search_fields = ['theme__title','theme__full_title' ,'literature__title']
-    form = TaskSetModelForm
 
-    inlines = [ProblemInline]
+    inlines = [ProblemInline, TheoryInline]
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return []
+        task_type = obj.literature.literature_type
+        inlines = super(TaskSetAdmin, self).get_inline_instances(request, obj)
+        for inline in inlines:
+            if isinstance(inline, ProblemInline) and task_type == 'problems':
+                return [inline]
+            if isinstance(inline, TheoryInline) and task_type == 'theory':
+                print(True)
+                return [inline]
+        return []
     
 admin.site.register(TaskSet, TaskSetAdmin)
 
