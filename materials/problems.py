@@ -68,3 +68,54 @@ def problems_list_zip(start_list):
 
     
     return final_list
+
+
+
+def unzip_problems(problems):
+    result = []
+    # Searches for sets like '1.3.2,3,4,5-7,9,13-17', '1.4.2' and so on
+    list_of_sets = re.findall('(?:[0-9]+\.)+[0-9-,]*[0-9](?!\.)',problems)
+    # Problems without dots
+    if list_of_sets == []:
+        list_of_sets = [problems]
+    for problem_set in list_of_sets:
+        unzipped_set = unzip_set(problem_set)
+        result += unzipped_set
+    return result
+
+# Unzip string as '1.3.2,4-6,9' to be ['1.3.2', '1.3.4', '1.3.5', '1.3.6', '1.3.9']
+def unzip_set(problem_set):
+    # Check whether it is simple problem like '1.4.2'
+    check = re.search('\.[0-9]+[,-]', problem_set)
+    if check == None:
+        return [problem_set]
+    #If not then it finds base ('1.3') and main part ('2,4-6,9')
+    index = check.start()
+    base = problem_set[0:index]
+    main = problem_set[index + 1:]
+    
+    #List of unzip main part
+    sub_problems = []
+    
+    #Consequent part is '4-6' = 4,5,6 (without last number, it is included below in leftover)
+    consequent = re.findall('[0-9]+-[0-9]+', main)
+    for problems in consequent:
+        start = int(problems.split('-')[0])
+        end = int(problems.split('-')[1])
+        for problem in range(start, end):
+            sub_problems.append(problem)
+    
+    #Leftovers are all numbers that are in main part: '2,4,6,9'. They are added without repeatings to sub_problems
+    leftover = re.findall('[0-9]+', main)
+    for problem in leftover:
+        if int(problem) not in sub_problems:
+            sub_problems.append(int(problem))
+    
+    sub_problems.sort()
+    
+    unzipped_problems = []
+    
+    for number in sub_problems:
+        unzipped_problems.append(f'{base}.{number}')
+    
+    return unzipped_problems
