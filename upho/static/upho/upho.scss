@@ -1,0 +1,136 @@
+// Your custom styles
+
+//Main variables
+$bgColor1: #505050;
+$bgColor2: white;
+$ufoHeight: 135px; 
+
+//Navbar variables
+$nbColor1: #232323;
+$nbColor2: #f2f2f2;
+$navbarHeight: 60px;
+$sidenavWidth: 250px;
+
+
+body, html {
+    height: 100%;
+}
+
+
+
+//Main Page 
+
+.main-header {
+    height: 100%;
+}
+.main-header-info {
+    background-color: $bgColor1;
+    height: 100%;
+}
+.main-header-logo {
+    background-color: $bgColor2;
+    height: 100%;
+}
+.main-info {
+    width: 100%;
+}
+@media(min-width : 1000px) {
+    .main-info {
+        width: 450px;
+    }
+}
+
+.bg-cover-main {
+    height: 100%;
+    min-height: 600px;
+    background-color: $bgColor1;
+    width: 100%;
+    z-index: -4;
+
+    padding-top: $navbarHeight + 30px ;
+}
+
+//Button with background color
+
+.btn-outline-bg {
+    color:$bgColor1 !important;
+    background-color: transparent !important;
+    border: 2px solid $bgColor1 !important
+  }
+  
+  .btn-outline-bg:hover, .btn-outline-bg:focus, .btn-outline-bg:active, .btn-outline-bg:active:focus, .btn-outline-bg.active {
+    color: $bgColor1 !important;
+    background-color: transparent !important;
+    border-color: #212121 !important
+  }
+  
+  .btn-outline-bg:not([disabled]):not(.disabled):active, .btn-outline-bg:not([disabled]):not(.disabled).active, .show>.btn-outline-bg.dropdown-toggle {
+    background-color: transparent !important;
+    border-color: #212121 !important;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+  }
+  
+  .btn-outline-bg:not([disabled]):not(.disabled):active:focus, .btn-outline-bg:not([disabled]):not(.disabled).active:focus, .show>.btn-outline-bg.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+  }
+  
+
+
+//Olympiad Page
+
+.olymp-files {
+    height: 100%;
+    background-color: $bgColor1;
+    padding-top: $navbarHeight;
+}
+
+#TourTab li a.active {
+    font-size: 1.5rem;
+    color: white;
+}
+#TourTab li a {
+    color: grey;
+}
+    
+#olymp-files-selectors {
+    border: 1px solid white;
+    border-radius: 1.5rem;
+    padding: 5px;
+}
+
+.olymp-files-select {
+    font-size: 1.2rem;
+}
+
+.olymp-files-btn {
+    border-radius: 1rem;
+    min-width: 130px;
+    width: 150px;
+    height: 80px;
+    text-align: center;
+}
+.olymp-files-btn.disabled {
+    opacity: 0.2;
+}
+
+
+//Customising year and class (parameters) selectors
+.btn-bg {
+    color: white;
+    background-color: $bgColor1;
+}
+
+
+@media (min-width:0px) {
+    #olymp-files-selectors {
+      max-width: 400px;
+    }
+}
+      
+@media (min-width:768px) {
+    #olymp-files-selectors {
+        max-width: 660px;
+    }
+}

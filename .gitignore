@@ -1,7 +1,6 @@
 physicswebsite/settings.py
 db.sqlite3
 media
-static
 migrations
 __pycache__
 node_modules

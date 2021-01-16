@@ -1,0 +1,114 @@
+body, html {
+  height: 100%;
+}
+
+.main-header {
+  height: 100%;
+}
+
+.main-header-info {
+  background-color: #505050;
+  height: 100%;
+}
+
+.main-header-logo {
+  background-color: white;
+  height: 100%;
+}
+
+.main-info {
+  width: 100%;
+}
+
+@media (min-width: 1000px) {
+  .main-info {
+    width: 450px;
+  }
+}
+.bg-cover-main {
+  height: 100%;
+  min-height: 600px;
+  background-color: #505050;
+  width: 100%;
+  z-index: -4;
+  padding-top: 90px;
+}
+
+.btn-outline-bg {
+  color: #505050 !important;
+  background-color: transparent !important;
+  border: 2px solid #505050 !important;
+}
+
+.btn-outline-bg:hover, .btn-outline-bg:focus, .btn-outline-bg:active, .btn-outline-bg:active:focus, .btn-outline-bg.active {
+  color: #505050 !important;
+  background-color: transparent !important;
+  border-color: #212121 !important;
+}
+
+.btn-outline-bg:not([disabled]):not(.disabled):active, .btn-outline-bg:not([disabled]):not(.disabled).active, .show > .btn-outline-bg.dropdown-toggle {
+  background-color: transparent !important;
+  border-color: #212121 !important;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-bg:not([disabled]):not(.disabled):active:focus, .btn-outline-bg:not([disabled]):not(.disabled).active:focus, .show > .btn-outline-bg.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.olymp-files {
+  height: 100%;
+  background-color: #505050;
+  padding-top: 60px;
+}
+
+#TourTab li a.active {
+  font-size: 1.5rem;
+  color: white;
+}
+
+#TourTab li a {
+  color: grey;
+}
+
+#olymp-files-selectors {
+  border: 1px solid white;
+  border-radius: 1.5rem;
+  padding: 5px;
+}
+
+.olymp-files-select {
+  font-size: 1.2rem;
+}
+
+.olymp-files-btn {
+  border-radius: 1rem;
+  min-width: 130px;
+  width: 150px;
+  height: 80px;
+  text-align: center;
+}
+
+.olymp-files-btn.disabled {
+  opacity: 0.2;
+}
+
+.btn-bg {
+  color: white;
+  background-color: #505050;
+}
+
+@media (min-width: 0px) {
+  #olymp-files-selectors {
+    max-width: 400px;
+  }
+}
+@media (min-width: 768px) {
+  #olymp-files-selectors {
+    max-width: 660px;
+  }
+}
+
+/*# sourceMappingURL=upho.css.map */

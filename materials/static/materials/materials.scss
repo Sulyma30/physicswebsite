@@ -1,0 +1,111 @@
+// Your custom styles
+
+//Main variables
+$bgColor1: #505050;
+$bgColor2: white;
+$ufoHeight: 135px; 
+
+//Navbar variables
+$nbColor1: #232323;
+$nbColor2: #f2f2f2;
+$navbarHeight: 60px;
+$sidenavWidth: 250px;
+
+
+body, html {
+    height: 100%;
+}
+
+//Material Page
+
+//Header
+.material-header {
+    padding-top: $navbarHeight;
+    background-color: $bgColor1;
+    min-height: 200px;
+}
+
+#material-content {
+    min-height: 80%;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: $bgColor1;
+}
+
+//Umprove visibility of material content considering sidebars
+@media (min-width: 1200px) {
+    .material-header {
+        padding-left: $sidenavWidth;
+        padding-right: $sidenavWidth;
+        height: 275px;
+    }
+}
+
+
+
+//Material Search
+
+$bigUfoHeight : 150px;
+
+#bigUfo {
+    width: 100%;
+    height: $bigUfoHeight;
+}
+
+.ufoLights {
+    width: 50px;
+    height: 50px;
+}
+
+#material-search > div {
+    flex: 1 1 auto;
+}
+#material-search {
+    min-height: 100%;
+    display: flex;
+}
+
+@media only screen and (min-width: 576px){
+    #material-selectors > div{
+        height: 100%;
+    }
+}
+
+#material-selectors {
+    background-color: $bgColor1;
+    padding-top: $navbarHeight + 90px;
+    flex: 1 1 auto;
+}
+#material-info {
+    background-color: $bgColor2;
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.active-column {
+    background-color: $bgColor2;
+    font-size: 4rem;
+    flex: 1 1 auto;
+}
+.selected-column{
+    flex: 0 0 auto;
+}
+.material-ufo {
+    fill: rgba(39, 40, 48, 1);
+}
+
+.selector-option{
+    flex: 0 1 auto;
+}
+
+#search-header {
+    position: absolute;
+    z-index: 2;
+    padding-top: $navbarHeight + 20px;
+    height: $bigUfoHeight;
+}
+
+.material_disabled {
+    opacity: 0.4;
+}
