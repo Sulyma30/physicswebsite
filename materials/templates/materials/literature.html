@@ -4,20 +4,34 @@
 {% block title %} Literature {% endblock %}
 
 {% block script %}
-<script type="text/javascript">
-    $(document).ready(function(){
-    $("#LiteratureSearch").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#LiteratureTable tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-    // Material Select Initialization
-    $('.mdb-select').materialSelect();
-
-});
-</script>
 <script type="text/babel" src="{% static 'materials/literature.js' %}"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('LiteratureSearch').addEventListener('input', LiteratureSearch);
+})
+function LiteratureSearch() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementsByTagName("LiteratureSearch");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("LiteratureTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    console.log('ok');
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+        console.log('ok');
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 {% endblock %}
 
 {% block header %}
